@@ -7,11 +7,31 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "./node_modules/.bin/rn-nodeify --install buffer,events,process,stream,util,inherits,fs,path,assert --hack;"
   },
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/bottom-tabs": "^5.2.7",
+    "@react-navigation/native": "^5.1.6",
+    "@react-navigation/stack": "^5.2.13",
+    "@reduxjs/toolkit": "^1.3.5",
+    "assert": "^1.5.0",
+    "buffer": "^4.9.2",
+    "dsteem": "^0.11.3",
+    "events": "^1.1.1",
+    "path-browserify": "0.0.0",
+    "process": "^0.11.10",
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-level-fs": "^3.0.1",
+    "react-native-reanimated": "^1.8.0",
+    "react-native-safe-area-context": "^0.7.3",
+    "react-native-screens": "^2.5.0",
+    "readable-stream": "^1.0.33",
+    "stream-browserify": "^1.0.0",
+    "util": "^0.10.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -21,9 +41,30 @@
     "eslint": "^6.8.0",
     "jest": "^25.4.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.11.0"
+    "react-test-renderer": "16.11.0",
+    "rn-nodeify": "^10.2.0"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "react-native": {
+    "path": "path-browserify",
+    "fs": "react-native-level-fs",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
+  },
+  "browser": {
+    "path": "path-browserify",
+    "fs": "react-native-level-fs",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
   }
 }
