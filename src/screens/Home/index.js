@@ -1,19 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
+  StyleSheet
 } from 'react-native';
 
-import Header from '../../components/Header';
+import PostList from '../../components/PostList';
 
 const Home = () => {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <PostList />
     </View>
   );
 };
