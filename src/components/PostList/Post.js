@@ -17,6 +17,8 @@ const Post = ({ item }) => {
 		Navigation.navigate('PostDetail', {data: [item.author, item.permlink]})
 	}
 
+	console.log(item)
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
@@ -28,6 +30,8 @@ const Post = ({ item }) => {
 					<Text style={styles.author}>{item.author}</Text>
 					<Text style={styles.fromNow}>{fromNow(item.last_update)}</Text>
 				</View>
+				<View style={{flex: 1}} />
+				<Icon name="dots-vertical" size={24} />
 			</View>
 			{
 				metaData.image && metaData.image[0] && (
@@ -45,16 +49,17 @@ const Post = ({ item }) => {
 			<View style={styles.footer}>
 				<Text style={styles.payout}>{sbdToDollar(item.pending_payout_value)}</Text>
 				<View style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-					<Icon name="chevron-up" size={20} />
+					<Icon name="heart-outline" size={18} />
 					<Text style={styles.votes}>{item.active_votes.length}</Text>
 				</View>
 				<View style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-					<Icon name="comment" size={18} />
+					<Icon name="comment-multiple-outline" size={18} />
 					<Text style={styles.votes}>{item.children}</Text>
 				</View>
 				<View style={{flex: 1}} />
-				<View style={{marginRight: 15, flexDirection: 'row', alignItems: 'center'}}>
-					<Icon name="share" size={20} />
+				<View style={{marginRight: 5, flexDirection: 'row', alignItems: 'center'}}>
+					<Icon name="share" size={18} />
+					<Text style={styles.votes}>0</Text>
 				</View>
 			</View>
 		</View>		
@@ -67,6 +72,7 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		flexDirection: 'row',
+		alignItems: 'center'
 	},
 	avatar: {
 		height: 50,
@@ -103,11 +109,13 @@ const styles = StyleSheet.create({
 	},
 	payout: {
 		fontSize: 18,
-		color: '#333'
+		lineHeight: 18,
+		color: '#333',
 	},
 	votes: {
 		fontSize: 18,
-		color: '#333'
+		color: '#333',
+		lineHeight: 18
 	}
 })
 
