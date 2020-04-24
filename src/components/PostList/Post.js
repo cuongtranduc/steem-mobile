@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Avatar from '../Avatar';
+
 import { fromNow } from '../../utils/time';
 import { sbdToDollar } from '../../utils/money';
 import * as Navigation from '../../utils/navigation'
@@ -18,9 +20,9 @@ const Post = ({ item }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
-				<Image
+				<Avatar
 					style={styles.avatar}
-					source={{uri: 'https://cdn.steemitimages.com/DQmReiMpbMJuD48KwaiZiBHYWkqYQp4J6mDxDJsn9KVZpnt/new-steem-account.png'}}
+					author={item.author}
 				/>
 				<View style={styles.postMetadata}>
 					<Text style={styles.author}>{item.author}</Text>
