@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+
 import {
   View,
   Text,
   FlatList,
   StyleSheet
 } from 'react-native';
-import client from '../../providers/dsteem';
 
 import Post from './Post';
+import {getPosts} from '../../redux/postReducer/operations';
 
 const PostList = () => {
-  const [posts, setPosts] = useState([]);
-
+  const dispatch = useDispatch();
+  const posts = useSelector(state => state.postReducer.posts);
   useEffect(() => {
-    client.database.getDiscussions('trending', {tag: '', limit: 5, truncate_body: 1 }).then(posts => {
-      setPosts(posts);
-    })
+    dispatch(getPosts());
   }, []);
 
   const _renderItem = ({item}) => {
