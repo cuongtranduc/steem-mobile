@@ -5,18 +5,15 @@ import {
   FlatList,
   StyleSheet
 } from 'react-native';
-import { Client } from 'dsteem';
+import client from '../../providers/dsteem';
 
 import Post from './Post';
-
-const client = new Client('https://api.steemit.com');
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    client.database.getDiscussions('trending', {limit: 5}).then(posts => {
-      console.log(posts);
+    client.database.getDiscussions('trending', {tag: '', limit: 5, truncate_body: 1 }).then(posts => {
       setPosts(posts);
     })
   }, []);

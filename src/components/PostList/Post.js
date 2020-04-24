@@ -1,14 +1,19 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { fromNow } from '../../utils/time';
 import { sbdToDollar } from '../../utils/money';
+import * as Navigation from '../../utils/navigation'
 
 const screenHeight = Dimensions.get('window').height;
 
 const Post = ({ item }) => {
 	const metaData = JSON.parse(item.json_metadata);
+
+	const navigateToDetail = () => {
+		Navigation.navigate('PostDetail', {data: [item.author, item.permlink]})
+	}
 
 	return (
 		<View style={styles.container}>
@@ -24,12 +29,12 @@ const Post = ({ item }) => {
 			</View>
 			{
 				metaData.image && metaData.image[0] && (
-					<View>
+					<TouchableOpacity onPress={navigateToDetail}>
 						<Image
 							style={styles.thumbnail}
 							source={{uri: metaData.image[0]}}
 						/>
-					</View>
+					</TouchableOpacity>
 				)
 			}
 			<View>
