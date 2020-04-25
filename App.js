@@ -5,7 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './src/screens/Home';
-import PostDetail from './src/screens/PostDetail';
+import PostDetailScreen from './src/screens/PostDetail';
+import ProfileScreen from './src/screens/Profile';
 
 import WalletScreen from './src/screens/Wallet';
 import AccountScreen from './src/screens/Account';
@@ -35,7 +36,14 @@ const HomeStack = () => {
       />
       <Stack.Screen 
         name="PostDetail"
-        component={PostDetail}
+        component={PostDetailScreen}
+      />
+      <Stack.Screen 
+        name="Profile"
+        options={{
+          headerShown: false
+        }}
+        component={ProfileScreen}
       />
     </Stack.Navigator>
   );

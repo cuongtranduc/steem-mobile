@@ -17,17 +17,23 @@ const Post = ({ item }) => {
 		Navigation.navigate('PostDetail', {data: [item.author, item.permlink]})
 	}
 
-	console.log(item)
+	const navigateToProfile = () => {
+		Navigation.navigate('Profile', {author: item.author})
+	}
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
-				<Avatar
-					style={styles.avatar}
-					author={item.author}
-				/>
+				<TouchableOpacity onPress={navigateToProfile}>
+					<Avatar
+						style={styles.avatar}
+						author={item.author}
+					/>
+				</TouchableOpacity>
 				<View style={styles.postMetadata}>
-					<Text style={styles.author}>{item.author}</Text>
+					<TouchableOpacity onPress={navigateToProfile}>
+						<Text style={styles.author}>{item.author}</Text>
+					</TouchableOpacity>
 					<Text style={styles.fromNow}>{fromNow(item.last_update)}</Text>
 				</View>
 				<View style={{flex: 1}} />

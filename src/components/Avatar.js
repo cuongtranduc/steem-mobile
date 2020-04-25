@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useMemo} from 'react';
 import FastImage from 'react-native-fast-image'
 
-const Avatar = ({author, style}) => {
+const Avatar = ({author, style, uri}) => {
   return (
     <FastImage 
       source={{
-        uri: `https://avatars.esteem.app/u/${author}/avatar/small`,
+        uri: uri || `https://avatars.esteem.app/u/${author}/avatar/small`,
         priority: FastImage.priority.high,
       }}
       resizeMode={FastImage.resizeMode.cover}
