@@ -6099,6 +6099,11 @@ react-native-screens@^2.5.0:
   dependencies:
     debounce "^1.2.0"
 
+react-native-tab-view@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.14.0.tgz#dd801f82fdb8e92fce9688b78d13923f3a5a2b3f"
+  integrity sha512-Z7XAM3NsMB96c17e9EAveunk7SUgilXWwVUTmWI1u/+p2SeOMUOB87z+//UXrcVlD1e9BPweR73q7dq7krTzTg==
+
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-6.6.0.tgz#66cf004918eb05d90778d64bd42077c1800d481b"
@@ -6107,6 +6112,11 @@ react-native-vector-icons@^6.6.0:
     lodash "^4.0.0"
     prop-types "^15.6.2"
     yargs "^13.2.2"
+
+react-native-webp-format@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-webp-format/-/react-native-webp-format-1.0.1.tgz#00d7e2d173ab98f273d703f2eaebcb7839a2847a"
+  integrity sha512-aU2DTaRvpeBSheE9FEzPqJ2BXgn+Us1rCPD6/zg86Z8NEeAMMdOx9fHAzTqZZM3+np5YYDJI+HgfTw410iBeWg==
 
 react-native@0.62.2:
   version "0.62.2"

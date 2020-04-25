@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 
 import Avatar from '../../components/Avatar';
+import PostList from './PostList';
 
 import { getUser } from '../../providers/dsteem';
 import { longDateFormat } from '../../utils/time';
@@ -39,10 +40,10 @@ const Profile = ({route}) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {
         !isLoading && (
-          <View>
+          <View style={{flex: 1}}>
             <FastImage 
               source={user.coverImage ? {
                   uri: user.coverImage,
@@ -82,35 +83,38 @@ const Profile = ({route}) => {
                 <Text style={styles.location}>{`Joined ${longDateFormat(user.created)}`}</Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: 10 }}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{ fontSize: 16, fontWeight: "bold"}}
-                >
-                  {user.following}
-                </Text>
-                <Text style={{ fontSize: 16, color: "#555", marginLeft: 5 }}>
-                  Following
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{ fontSize: 16, fontWeight: "bold", marginLeft: 30 }}
-                >
-                  {user.followers}
-                </Text>
-                <Text style={{ fontSize: 16, color: "#555", marginLeft: 5 }}>
-                  Followers
-                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{ fontSize: 16, fontWeight: "bold"}}
+                  >
+                    {user.following}
+                  </Text>
+                  <Text style={{ fontSize: 16, color: "#555", marginLeft: 5 }}>
+                    Following
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{ fontSize: 16, fontWeight: "bold", marginLeft: 30 }}
+                  >
+                    {user.followers}
+                  </Text>
+                  <Text style={{ fontSize: 16, color: "#555", marginLeft: 5 }}>
+                    Followers
+                  </Text>
+                </View>
               </View>
             </View>
-            </View>
+            <PostList 
+        
+            />
           </View> 
         )
       }
-      <TouchableOpacity style={{position: 'absolute', left: 15, top: 15, right: 0, bottom: 0}}>
+      {/* <TouchableOpacity style={{position: 'absolute', left: 15, top: 15, right: 0, bottom: 0}}>
         <Icon name="keyboard-backspace" size={25} color="#fff" />
-      </TouchableOpacity>
-    </ScrollView>
+      </TouchableOpacity> */}
+    </View>
   );
 };
 
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
     lineHeight: 22,
-    color: 'rgb(27, 149, 224);'
+    color: 'rgb(27, 149, 224)'
   }
 });
 

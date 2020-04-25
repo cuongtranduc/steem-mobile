@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FastImage from 'react-native-fast-image';
 
 import Avatar from '../Avatar';
 
@@ -11,7 +12,8 @@ import * as Navigation from '../../utils/navigation'
 const screenHeight = Dimensions.get('window').height;
 
 const Post = ({ item }) => {
-	const metaData = JSON.parse(item.json_metadata);
+  const metaData = JSON.parse(item.json_metadata);
+	console.log(metaData.image[0])
 
 	const navigateToDetail = () => {
 		Navigation.navigate('PostDetail', {data: [item.author, item.permlink]})
@@ -45,6 +47,7 @@ const Post = ({ item }) => {
 						<Image
 							style={styles.thumbnail}
 							source={{uri: metaData.image[0]}}
+							resizeMode={FastImage.resizeMode.cover}
 						/>
 					</TouchableOpacity>
 				)
@@ -55,16 +58,16 @@ const Post = ({ item }) => {
 			<View style={styles.footer}>
 				<Text style={styles.payout}>{sbdToDollar(item.pending_payout_value)}</Text>
 				<View style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-					<Icon name="heart-outline" size={18} />
+					<Icon name="heart" size={18} color="red" />
 					<Text style={styles.votes}>{item.active_votes.length}</Text>
 				</View>
 				<View style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-					<Icon name="comment-multiple-outline" size={18} />
+					<Icon name="comment-multiple-outline" size={18} color="green" />
 					<Text style={styles.votes}>{item.children}</Text>
 				</View>
 				<View style={{flex: 1}} />
 				<View style={{marginRight: 5, flexDirection: 'row', alignItems: 'center'}}>
-					<Icon name="share" size={18} />
+					<Icon name="share" size={18} color="blue" />
 					<Text style={styles.votes}>0</Text>
 				</View>
 			</View>

@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './src/screens/Home';
 import PostDetailScreen from './src/screens/PostDetail';
@@ -55,10 +56,39 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer ref={navigationRef}>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeStack} />
-          <Tab.Screen name="Wallet" component={WalletScreen} />
-          <Tab.Screen name="Account" component={AccountScreen} />
+        <Tab.Navigator
+          tabBarOptions={{
+            showLabel: false,
+          }}
+        >
+          <Tab.Screen 
+            name="Home" 
+            component={HomeStack}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Icon name="home" color={color} size={26} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Wallet" 
+            component={WalletScreen}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Icon name="wallet" color={color} size={26} />
+              ),
+              showLabel: false
+            }}
+          />
+          <Tab.Screen
+            name="Account"
+            component={AccountScreen}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Icon name="account" color={color} size={26} />
+              ),
+            }}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
