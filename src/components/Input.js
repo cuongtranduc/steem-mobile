@@ -2,6 +2,8 @@ import React, {useState, createRef} from 'react';
 import {TouchableOpacity, StyleSheet, TextInput, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { colors } from '../utils/theme';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -11,7 +13,8 @@ const Input = ({icon, value, onValueChange}) => {
 
   return (
     <TouchableOpacity
-      style={[styles.inputContainer, {borderBottomColor: color === "#666" ? 'rgba(0, 0, 0, 0.3)' : color}]}
+      activeOpacity={1}
+      style={[styles.inputContainer, {borderBottomColor: color === "#666" ? 'rgba(0, 0, 0, 0.4)' : color}]}
       onPress={() => inputUserRef.current.focus()}>
       <Icon name={icon} size={25} color={color} />
       <TextInput
@@ -19,9 +22,9 @@ const Input = ({icon, value, onValueChange}) => {
         onChangeText={onValueChange}
         ref={inputUserRef}
         style={styles.input}
-        onFocus={() => setColor('#28D8A1')}
-        onBlur={() => setColor("#555")}
-        selectionColor={'#28D8A1'}
+        onFocus={() => setColor(colors.primary)}
+        onBlur={() => setColor("#666")}
+        selectionColor={colors.primary}
       />
     </TouchableOpacity>
   );
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'stretch',
     height: screenHeight * 0.08,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

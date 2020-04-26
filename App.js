@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import { Platform, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,6 +19,9 @@ import store from './src/redux';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const navigationRef = React.createRef();
+const iconSize = (Platform.OS === 'ios') ? 30 : 24;
+
 const HomeStack = () => {
   return (
     <Stack.Navigator>
@@ -31,6 +35,15 @@ const HomeStack = () => {
             fontWeight: 'bold',
             fontSize: 20
           },
+          headerLeft: () => (
+            <Icon style={{marginLeft: 15}} name="menu" size={iconSize} color="#fff" />
+          ),
+          headerRight: () => (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon name="bell-outline" size={25} color="#666" />
+              <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" />
+            </View>
+          ),
         }}
         name="Home" 
         component={HomeScreen} 
@@ -50,8 +63,6 @@ const HomeStack = () => {
   );
 }
 
-const navigationRef = React.createRef();
-
 const App = () => {
   return (
     <Provider store={store}>
@@ -59,7 +70,7 @@ const App = () => {
         <Tab.Navigator
           tabBarOptions={{
             showLabel: false,
-            activeTintColor: '#28D8A1'
+            activeTintColor: '#000'
           }}
         >
           <Tab.Screen 
@@ -67,7 +78,7 @@ const App = () => {
             component={HomeStack}
             options={{
               tabBarIcon: ({ color }) => (
-                <Icon name="home" color={color} size={26} />
+                <Icon name="home" color={color} size={iconSize} />
               ),
             }}
           />
@@ -76,7 +87,7 @@ const App = () => {
             component={WalletScreen}
             options={{
               tabBarIcon: ({ color }) => (
-                <Icon name="wallet" color={color} size={26} />
+                <Icon name="wallet" color={color} size={iconSize} />
               ),
               showLabel: false
             }}
@@ -86,7 +97,7 @@ const App = () => {
             component={AccountScreen}
             options={{
               tabBarIcon: ({ color }) => (
-                <Icon name="account" color={color} size={26} />
+                <Icon name="account" color={color} size={iconSize} />
               ),
             }}
           />
