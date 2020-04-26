@@ -59,6 +59,7 @@ const App = () => {
         <Tab.Navigator
           tabBarOptions={{
             showLabel: false,
+            activeTintColor: '#28D8A1'
           }}
         >
           <Tab.Screen 

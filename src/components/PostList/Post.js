@@ -13,7 +13,6 @@ const screenHeight = Dimensions.get('window').height;
 
 const Post = ({ item }) => {
   const metaData = JSON.parse(item.json_metadata);
-	console.log(metaData.image[0])
 
 	const navigateToDetail = () => {
 		Navigation.navigate('PostDetail', {data: [item.author, item.permlink]})

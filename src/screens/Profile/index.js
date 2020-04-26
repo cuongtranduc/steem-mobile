@@ -62,25 +62,27 @@ const Profile = ({route}) => {
               {
                 user.description && <Text style={styles.description}>{user.description}</Text>
               }
-              {
-                user.website && (
-                  <View style={[styles.locationContainer, {marginTop: 10}]}>
-                    <Icon name="link-variant" size={22} color="#333" />
-                    <Text style={styles.website}>{user.website}</Text>
-                  </View>
-                )
-              }
-              {
-                user.location && (
-                  <View style={[styles.locationContainer, {marginTop: 10, marginLeft: 15}]}>
-                    <Icon name="map-marker" size={22} color="#333" />
-                    <Text style={styles.location}>{user.location}</Text>
-                  </View>
-                )
-              }
-              <View style={[styles.locationContainer, {marginTop: 5}]}>
-                <Icon name="calendar-range" size={22} color="#333" />
-                <Text style={styles.location}>{`Joined ${longDateFormat(user.created)}`}</Text>
+              <View style={{marginTop: 10}}>
+                {
+                  user.website && (
+                    <View style={[styles.locationContainer]}>
+                      <Icon name="link-variant" size={22} color="#333" />
+                      <Text style={styles.website}>{user.website}</Text>
+                    </View>
+                  )
+                }
+                {
+                  user.location && (
+                    <View style={[styles.locationContainer, {marginTop: 5}]}>
+                      <Icon name="map-marker" size={22} color="#333" />
+                      <Text style={styles.location}>{user.location}</Text>
+                    </View>
+                  )
+                }
+                <View style={[styles.locationContainer, {marginTop: 5}]}>
+                  <Icon name="calendar-range" size={22} color="#333" />
+                  <Text style={styles.location}>{`Joined ${longDateFormat(user.created)}`}</Text>
+                </View>
               </View>
               <View style={{ flexDirection: "row", marginTop: 10 }}>
                 <View style={{ flexDirection: "row" }}>
