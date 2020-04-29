@@ -7,12 +7,12 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import {Client} from 'dsteem'
- 
+import {Client} from 'dsteem';
+
 const Account = () => {
   return (
     <View style={styles.container}>
-        <Text>Steem</Text>
+      <Text>Steem</Text>
     </View>
   );
 };
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.1,
     backgroundColor: '#000',
-  }
-})
+  },
+});
 
 export default Account;

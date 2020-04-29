@@ -1,9 +1,11 @@
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
-export default ({ message = {}, actions = {}, process = () => {} }) => payload => async (dispatch, getState) => {
+export default ({message = {}, actions = {}, process = () => {}}) => (
+  payload,
+) => async (dispatch, getState) => {
   const execute = async () => {
-    const { startAction, successAction, failAction } = actions;
-    const { startMessage, successMessage, failMessage } = message;
+    const {startAction, successAction, failAction} = actions;
+    const {startMessage, successMessage, failMessage} = message;
 
     startAction && dispatch(startAction(payload));
 
@@ -11,15 +13,15 @@ export default ({ message = {}, actions = {}, process = () => {} }) => payload =
       Alert.alert(
         startMessage,
         [
-          { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-          { text: 'OK', onPress: () => {} },
+          {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+          {text: 'OK', onPress: () => {}},
         ],
-        { cancelable: false }
+        {cancelable: false},
       );
 
     try {
-      const result = await process({ payload, dispatch, getState });
-      successAction && dispatch(successAction({ result, params: payload }));
+      const result = await process({payload, dispatch, getState});
+      successAction && dispatch(successAction({result, params: payload}));
 
       !!successMessage &&
         Alert.alert(
@@ -30,9 +32,9 @@ export default ({ message = {}, actions = {}, process = () => {} }) => payload =
               onPress: () => {},
               style: 'cancel',
             },
-            { text: 'OK', onPress: () => {} },
+            {text: 'OK', onPress: () => {}},
           ],
-          { cancelable: false }
+          {cancelable: false},
         );
 
       return result;
@@ -48,9 +50,9 @@ export default ({ message = {}, actions = {}, process = () => {} }) => payload =
               onPress: () => {},
               style: 'cancel',
             },
-            { text: 'OK', onPress: () => {} },
+            {text: 'OK', onPress: () => {}},
           ],
-          { cancelable: false }
+          {cancelable: false},
         );
       return error;
     }

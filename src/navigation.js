@@ -29,7 +29,7 @@ const HomeStack = () => {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: '#000',
+            backgroundColor: colors.black,
           },
           headerTintColor: '#e3e3e3',
           headerTitleStyle: {
@@ -92,7 +92,7 @@ const BottomStack = () => {
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
-        activeTintColor: '#000',
+        activeTintColor: colors.black,
       }}>
       <Tab.Screen
         name="Home"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
@@ -16,8 +16,8 @@ import FastImage from 'react-native-fast-image';
 import Avatar from '../../components/Avatar';
 import PostList from './PostList';
 
-import { getUser } from '../../providers/dsteem';
-import { longDateFormat } from '../../utils/time';
+import {getUser} from '../../providers/dsteem';
+import {longDateFormat} from '../../utils/time';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -32,87 +32,78 @@ const Profile = ({route}) => {
   }, []);
 
   const getUserInfo = async () => {
-    const { author } = route.params;
+    const {author} = route.params;
     const _user = await getUser(author);
 
     setUser(_user);
     setIsLoading(false);
-  }
+  };
 
   return (
     <View style={styles.container}>
-      {
-        !isLoading && (
-          <View style={{flex: 1}}>
-            <FastImage 
-              source={user.coverImage ? {
-                  uri: user.coverImage,
-                  priority: FastImage.priority.high,
-                } : require('../../assets/images/steem_cover.jpg')
-              }
-              resizeMode={FastImage.resizeMode.cover}
-              style={styles.coverImage}
-            />
-            <View style={{padding: 15}}>
-              <Avatar 
-                style={styles.avatar}
-                uri={user.avatar}
-              />
-              <Text style={styles.name}>{user.name}</Text>
-              {
-                user.description && <Text style={styles.description}>{user.description}</Text>
-              }
-              <View style={{marginTop: 10}}>
-                {
-                  user.website && (
-                    <View style={[styles.locationContainer]}>
-                      <Icon name="link-variant" size={22} color="#333" />
-                      <Text style={styles.website}>{user.website}</Text>
-                    </View>
-                  )
-                }
-                {
-                  user.location && (
-                    <View style={[styles.locationContainer, {marginTop: 5}]}>
-                      <Icon name="map-marker" size={22} color="#333" />
-                      <Text style={styles.location}>{user.location}</Text>
-                    </View>
-                  )
-                }
+      {!isLoading && (
+        <View style={{flex: 1}}>
+          <FastImage
+            source={
+              user.coverImage
+                ? {
+                    uri: user.coverImage,
+                    priority: FastImage.priority.high,
+                  }
+                : require('../../assets/images/steem_cover.jpg')
+            }
+            resizeMode={FastImage.resizeMode.cover}
+            style={styles.coverImage}
+          />
+          <View style={{padding: 15}}>
+            <Avatar style={styles.avatar} uri={user.avatar} />
+            <Text style={styles.name}>{user.name}</Text>
+            {user.description && (
+              <Text style={styles.description}>{user.description}</Text>
+            )}
+            <View style={{marginTop: 10}}>
+              {user.website && (
+                <View style={[styles.locationContainer]}>
+                  <Icon name="link-variant" size={22} color="#333" />
+                  <Text style={styles.website}>{user.website}</Text>
+                </View>
+              )}
+              {user.location && (
                 <View style={[styles.locationContainer, {marginTop: 5}]}>
-                  <Icon name="calendar-range" size={22} color="#333" />
-                  <Text style={styles.location}>{`Joined ${longDateFormat(user.created)}`}</Text>
+                  <Icon name="map-marker" size={22} color="#333" />
+                  <Text style={styles.location}>{user.location}</Text>
                 </View>
-              </View>
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{ fontSize: 16, fontWeight: "bold"}}
-                  >
-                    {user.following}
-                  </Text>
-                  <Text style={{ fontSize: 16, color: "#555", marginLeft: 5 }}>
-                    Following
-                  </Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{ fontSize: 16, fontWeight: "bold", marginLeft: 30 }}
-                  >
-                    {user.followers}
-                  </Text>
-                  <Text style={{ fontSize: 16, color: "#555", marginLeft: 5 }}>
-                    Followers
-                  </Text>
-                </View>
+              )}
+              <View style={[styles.locationContainer, {marginTop: 5}]}>
+                <Icon name="calendar-range" size={22} color="#333" />
+                <Text style={styles.location}>{`Joined ${longDateFormat(
+                  user.created,
+                )}`}</Text>
               </View>
             </View>
-            <PostList 
-        
-            />
-          </View> 
-        )
-      }
+            <View style={{flexDirection: 'row', marginTop: 10}}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                  {user.following}
+                </Text>
+                <Text style={{fontSize: 16, color: '#555', marginLeft: 5}}>
+                  Following
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{fontSize: 16, fontWeight: 'bold', marginLeft: 30}}>
+                  {user.followers}
+                </Text>
+                <Text style={{fontSize: 16, color: '#555', marginLeft: 5}}>
+                  Followers
+                </Text>
+              </View>
+            </View>
+          </View>
+          <PostList />
+        </View>
+      )}
       {/* <TouchableOpacity style={{position: 'absolute', left: 15, top: 15, right: 0, bottom: 0}}>
         <Icon name="keyboard-backspace" size={25} color="#fff" />
       </TouchableOpacity> */}
@@ -128,10 +119,10 @@ const styles = StyleSheet.create({
   coverImage: {
     height: screenHeight / 6,
     width: '100%',
-    backgroundColor: 'gray'
+    backgroundColor: 'gray',
   },
   avatar: {
-    marginTop: - (screenWidth / 10 + 15),
+    marginTop: -(screenWidth / 10 + 15),
     borderWidth: 3,
     borderColor: '#fff',
     height: screenWidth / 5,
@@ -141,12 +132,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     letterSpacing: 1,
-    color: '#555'
+    color: '#555',
   },
   description: {
     marginTop: 10,
     fontSize: 16,
-    color: '#555'
+    color: '#555',
   },
   locationContainer: {
     flexDirection: 'row',
@@ -156,14 +147,14 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
     lineHeight: 22,
-    color: '#555'
+    color: '#555',
   },
   website: {
     marginLeft: 5,
     fontSize: 16,
     lineHeight: 22,
-    color: 'rgb(27, 149, 224)'
-  }
+    color: 'rgb(27, 149, 224)',
+  },
 });
 
 export default Profile;

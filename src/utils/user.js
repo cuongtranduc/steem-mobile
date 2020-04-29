@@ -1,6 +1,6 @@
 export const getName = (about) => {
   if (about.profile && about.profile.name) {
-      return about.profile.name;
+    return about.profile.name;
   }
   return null;
 };
@@ -10,32 +10,32 @@ export const getLocation = (about) => {
     return about.profile.location;
   }
   return null;
-}
+};
 
 export const getAvatar = (about) => {
   if (about.profile && about.profile.profile_image) {
-      return about.profile.profile_image;
+    return about.profile.profile_image;
   }
   return null;
 };
 
 export const getCoverImage = (about) => {
   if (about.profile && about.profile.cover_image) {
-      return about.profile.cover_image;
+    return about.profile.cover_image;
   }
   return null;
 };
 
 export const getWebsite = (about) => {
   if (about.profile && about.profile.website) {
-      return about.profile.website;
+    return about.profile.website;
   }
   return null;
 };
 
 export const getDescription = (about) => {
   if (about.profile && about.profile.about) {
-      return about.profile.about;
+    return about.profile.about;
   }
   return null;
 };

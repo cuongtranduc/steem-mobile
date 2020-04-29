@@ -7,11 +7,11 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
- 
+
 const Wallet = () => {
   return (
     <View>
-        <Text>Wallet Screen</Text>
+      <Text>Wallet Screen</Text>
     </View>
   );
 };

@@ -27,7 +27,7 @@ const SIGNUP_URL = 'https://signup.steemit.com/';
 const Account = () => {
   const dispacth = useDispatch();
   const [isRemember, setIsRemember] = useState(false);
-  const [user, setUser] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const _onSetRememberMe = () => {
@@ -35,12 +35,12 @@ const Account = () => {
   };
 
   const _login = () => {
-    dispacth(login({user, password}));
+    dispacth(login({username, password}));
   };
 
   const isLoginDisabled = useCallback(() => {
-    return user === '' || password === '';
-  }, [user, password]);
+    return username === '' || password === '';
+  }, [username, password]);
 
   return (
     <View style={{flex: 1}}>
@@ -54,8 +54,8 @@ const Account = () => {
           <Text style={styles.signInText}>Sign in to access more content</Text>
         </View>
         <Input
-          value={user}
-          onValueChange={(value) => setUser(value)}
+          value={username}
+          onValueChange={(value) => setUsername(value)}
           icon="account-circle"
         />
         <Input

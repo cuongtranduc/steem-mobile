@@ -1,24 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {POST_CATEGORY} from '../../utils/constants';
 
 const initialState = {
   account: {},
   isLoading: false,
   isError: false,
-}
+};
 
 const home = createSlice({
   name: 'postReducer',
   initialState,
   reducers: {
-    startLogin: state => ({ ...state, isLoading: true }),
-    successLogin: (state, { payload }) => ({
+    startLogin: (state) => ({...state, isLoading: true}),
+    successLogin: (state, {payload}) => ({
       ...state,
       isFetching: false,
       isError: false,
       account: payload.result,
     }),
-    failLogin: state => ({ ...state, isLoading: false, isError: true }),
+    failLogin: (state) => ({...state, isLoading: false, isError: true}),
   },
 });
 

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {POST_CATEGORY} from '../../utils/constants';
 
 const initialState = {
@@ -8,20 +8,20 @@ const initialState = {
   posts: [],
   isLoading: false,
   isError: false,
-}
+};
 
 const home = createSlice({
   name: 'postReducer',
   initialState,
   reducers: {
-    startGetPosts: state => ({ ...state, isLoading: true }),
-    successGetPosts: (state, { payload }) => ({
+    startGetPosts: (state) => ({...state, isLoading: true}),
+    successGetPosts: (state, {payload}) => ({
       ...state,
       isLoading: false,
       isError: false,
       posts: payload.result,
     }),
-    failGetPosts: state => ({ ...state, isLoading: false, isError: true }),
+    failGetPosts: (state) => ({...state, isLoading: false, isError: true}),
   },
 });
 

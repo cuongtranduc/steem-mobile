@@ -7,12 +7,12 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import {Client} from 'dsteem'
- 
+import {Client} from 'dsteem';
+
 const Wallet = () => {
   return (
     <View>
-        <Text>Wallet Screen</Text>
+      <Text>Wallet Screen</Text>
     </View>
   );
 };

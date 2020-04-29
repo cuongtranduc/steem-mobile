@@ -1,26 +1,32 @@
-import { Client } from 'dsteem';
-import { get, has } from 'lodash';
-import { 
-  getName, 
-  getAvatar, 
-  getReputation, 
-  getLocation, 
+import {Client, PrivateKey} from 'dsteem';
+import {get, has} from 'lodash';
+import {
+  getName,
+  getAvatar,
+  getReputation,
+  getLocation,
   getCoverImage,
   getWebsite,
-  getDescription
- } from '../utils/user';
+  getDescription,
+} from '../utils/user';
+
+import {vestToSteem} from '../utils/money';
 
 const client = new Client('https://api.steemit.com');
 
 export function getPosts({tag, limit, category}) {
-  return client.database.getDiscussions(category, {tag, limit, truncate_body: 1 });
+  return client.database.getDiscussions(category, {
+    tag,
+    limit,
+    truncate_body: 1,
+  });
 }
 
 export async function getUser(user) {
   try {
     const [account, follows] = await Promise.all([
-      client.database.getAccounts([user]), 
-      client.database.call('get_follow_count', [user])
+      client.database.getAccounts([user]),
+      client.database.call('get_follow_count', [user]),
     ]);
     const _account = {
       ...account[0],
@@ -65,7 +71,10 @@ export async function getUser(user) {
       get(globalProperties, 'total_vesting_fund_steem'),
     );
 
-    if (has(_account, 'posting_json_metadata') || has(_account, 'json_metadata')) {
+    if (
+      has(_account, 'posting_json_metadata') ||
+      has(_account, 'json_metadata')
+    ) {
       try {
         _account.about =
           JSON.parse(get(_account, 'posting_json_metadata')) ||
@@ -81,7 +90,6 @@ export async function getUser(user) {
     _account.display_name = getName(get(_account, 'about'));
     _account.website = getWebsite(get(_account, 'about'));
     _account.description = getDescription(get(_account, 'about'));
-    _account.description111111 = 'dsdsdsd';
     _account.following = follows.following_count;
     _account.followers = follows.follower_count;
 
@@ -93,10 +101,8 @@ export async function getUser(user) {
   }
 }
 
-export const vestToSteem = async (vestingShares, totalVestingShares, totalVestingFundSteem) =>
-  (
-    parseFloat(totalVestingFundSteem) *
-    (parseFloat(vestingShares) / parseFloat(totalVestingShares))
-  ).toFixed(0);
+export function login(username, password, keyrole) {
+  return PrivateKey.fromLogin(username, password, keyrole);
+}
 
 export default client;

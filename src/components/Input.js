@@ -1,8 +1,13 @@
 import React, {useState, createRef} from 'react';
-import {TouchableOpacity, StyleSheet, TextInput, Dimensions} from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { colors } from '../utils/theme';
+import {colors} from '../utils/theme';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -14,7 +19,10 @@ const Input = ({icon, value, onValueChange, isPassword}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      style={[styles.inputContainer, {borderBottomColor: color === "#666" ? 'rgba(0, 0, 0, 0.4)' : color}]}
+      style={[
+        styles.inputContainer,
+        {borderBottomColor: color === '#666' ? 'rgba(0, 0, 0, 0.4)' : color},
+      ]}
       onPress={() => inputUserRef.current.focus()}>
       <Icon name={icon} size={25} color={color} />
       <TextInput
@@ -23,7 +31,7 @@ const Input = ({icon, value, onValueChange, isPassword}) => {
         ref={inputUserRef}
         style={styles.input}
         onFocus={() => setColor(colors.primary)}
-        onBlur={() => setColor("#666")}
+        onBlur={() => setColor('#666')}
         selectionColor={colors.primary}
         secureTextEntry={isPassword}
       />

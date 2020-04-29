@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useMemo} from 'react';
-import FastImage from 'react-native-fast-image'
+import FastImage from 'react-native-fast-image';
 
 const Avatar = ({author, style, uri}) => {
   return (
-    <FastImage 
+    <FastImage
       source={{
         uri: uri || `https://avatars.esteem.app/u/${author}/avatar/small`,
         priority: FastImage.priority.high,
@@ -11,7 +11,7 @@ const Avatar = ({author, style, uri}) => {
       resizeMode={FastImage.resizeMode.cover}
       style={style}
     />
-  )
-}
+  );
+};
 
 export default React.memo(Avatar);

@@ -12,7 +12,6 @@ const storage = createSlice({
   },
 });
 
-export const { reducer } = storage;
+export const {reducer} = storage;
 
 export default storage;
-
