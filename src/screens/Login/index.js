@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,8 +7,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Linking,
-  KeyboardAvoidingView,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
@@ -17,21 +17,34 @@ import Input from '../../components/Input';
 import {goBack} from '../../navigation';
 import {colors} from '../../utils/theme';
 
+import {login} from '../../redux/accountReducer/operations';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 const SIGNUP_URL = 'https://signup.steemit.com/';
 
 const Account = () => {
+  const dispacth = useDispatch();
   const [isRemember, setIsRemember] = useState(false);
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
 
   const _onSetRememberMe = () => {
     setIsRemember(!isRemember);
   };
 
+  const _login = () => {
+    dispacth(login({user, password}));
+  };
+
+  const isLoginDisabled = useCallback(() => {
+    return user === '' || password === '';
+  }, [user, password]);
+
   return (
     <View style={{flex: 1}}>
-      <KeyboardAvoidingView behavior="height" style={styles.container}>
+      <View behavior="height" style={styles.container}>
         <Image
           style={styles.logo}
           source={require('../../assets/images/steem_logo.webp')}
@@ -40,8 +53,17 @@ const Account = () => {
           <Text style={styles.welcomeText}>Welcome Back,</Text>
           <Text style={styles.signInText}>Sign in to access more content</Text>
         </View>
-        <Input icon="account-circle" />
-        <Input icon="lock-question" />
+        <Input
+          value={user}
+          onValueChange={(value) => setUser(value)}
+          icon="account-circle"
+        />
+        <Input
+          isPassword={true}
+          value={password}
+          onValueChange={(value) => setPassword(value)}
+          icon="lock-question"
+        />
         <TouchableOpacity style={styles.rememberMe} onPress={_onSetRememberMe}>
           <Icon
             size={25}
@@ -54,19 +76,20 @@ const Account = () => {
           />
           <Text style={styles.rememberMeText}>Remember me</Text>
         </TouchableOpacity>
-        <View style={styles.loginButton}>
+        <TouchableOpacity
+          onPress={_login}
+          disabled={isLoginDisabled()}
+          style={[styles.loginButton, {opacity: isLoginDisabled() ? 0.5 : 1}]}>
           <Text style={styles.loginText}>LOGIN</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.signUpContainer}>
           <Text style={styles.rememberMeText}>Don't have an account?</Text>
           <TouchableOpacity onPress={() => Linking.openURL(SIGNUP_URL)}>
             <Text style={styles.signUpText}> Signup here</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-      <TouchableOpacity
-        onPress={() => goBack()}
-        style={styles.closeIcon}>
+      </View>
+      <TouchableOpacity onPress={() => goBack()} style={styles.closeIcon}>
         <Icon name="close" size={30} />
       </TouchableOpacity>
     </View>
@@ -140,7 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   signInText: {fontSize: 18, color: '#333'},
-  closeIcon: {position: 'absolute', top: getStatusBarHeight(), left: 15}
+  closeIcon: {position: 'absolute', top: getStatusBarHeight(), left: 15},
 });
 
 export default Account;

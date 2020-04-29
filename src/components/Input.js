@@ -7,7 +7,7 @@ import { colors } from '../utils/theme';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-const Input = ({icon, value, onValueChange}) => {
+const Input = ({icon, value, onValueChange, isPassword}) => {
   const inputUserRef = createRef();
   const [color, setColor] = useState('#666');
 
@@ -25,6 +25,7 @@ const Input = ({icon, value, onValueChange}) => {
         onFocus={() => setColor(colors.primary)}
         onBlur={() => setColor("#666")}
         selectionColor={colors.primary}
+        secureTextEntry={isPassword}
       />
     </TouchableOpacity>
   );
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
+    flex: 1,
     marginLeft: 15,
     fontSize: 16,
   },
