@@ -4,7 +4,6 @@ import {View, Text, StyleSheet} from 'react-native';
 import PostHeader from '../../components/PostHeader';
 
 const PostDetailHeader = ({post}) => {
-  console.log('post', post);
   return (
     <View style={{marginBottom: 15}}>
       {post.title && <Text style={styles.title}>{post.title}</Text>}
