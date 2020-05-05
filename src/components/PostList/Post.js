@@ -10,9 +10,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 
-import Avatar from '../Avatar';
+import PostHeder from '../PostHeader';
 
-import {fromNow} from '../../utils/time';
 import {colors} from '../../utils/theme';
 import {sbdToDollar} from '../../utils/money';
 import * as Navigation from '../../navigation';
@@ -26,29 +25,15 @@ const Post = ({item}) => {
     Navigation.navigate('PostDetail', {data: [item.author, item.permlink]});
   };
 
-  const navigateToProfile = () => {
-    Navigation.navigate('Profile', {author: item.author});
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={navigateToProfile}>
-          <Avatar style={styles.avatar} author={item.author} />
-        </TouchableOpacity>
-        <View style={styles.postMetadata}>
-          <TouchableOpacity onPress={navigateToProfile}>
-            <Text style={styles.author}>{item.author}</Text>
-          </TouchableOpacity>
-          <Text style={styles.fromNow}>{fromNow(item.last_update)}</Text>
-        </View>
-        <View style={{flex: 1}} />
-        <Icon name="dots-vertical" size={24} />
-      </View>
+      <PostHeder item={item} />
       <View>
-        <Text numberOfLines={2} style={styles.title}>
-          {item.title}
-        </Text>
+        <TouchableOpacity onPress={navigateToDetail}>
+          <Text numberOfLines={2} style={styles.title}>
+            {item.title}
+          </Text>
+        </TouchableOpacity>
       </View>
       {metaData.image && metaData.image[0] && (
         <TouchableOpacity onPress={navigateToDetail}>
