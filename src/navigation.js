@@ -29,9 +29,16 @@ const HomeStack = () => {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: colors.black,
+            backgroundColor: colors.white,
+            shadowColor: 'gray',
+            shadowOpacity: 0.8,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 1,
+              width: 0,
+            },
           },
-          headerTintColor: '#e3e3e3',
+          headerTintColor: colors.dark_gray,
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 20,
@@ -42,7 +49,7 @@ const HomeStack = () => {
                 style={{marginLeft: 15}}
                 name="account-circle"
                 size={iconSize}
-                color="#e3e3e3"
+                color={colors.light_gray}
               />
             </TouchableOpacity>
           ),
@@ -51,7 +58,7 @@ const HomeStack = () => {
               <Icon
                 name="bell"
                 size={iconSize}
-                color="#e3e3e3"
+                color={colors.light_gray}
                 style={{marginRight: 15}}
               />
               {/* <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" /> */}
@@ -92,14 +99,14 @@ const BottomStack = () => {
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
-        activeTintColor: colors.black,
+        activeTintColor: colors.primary,
       }}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="home" color={color} size={iconSize} />
+            <Icon name="home-heart" color={color} size={iconSize} />
           ),
         }}
       />
@@ -113,9 +120,8 @@ const BottomStack = () => {
                 height: iconSize * 2.2,
                 width: iconSize * 2.2,
                 borderRadius: iconSize * 1.1,
-                backgroundColor: colors.white,
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center',
                 bottom: iconSize / 4,
                 // borderColor: colors.light_gray,
                 // borderWidth: 5,
@@ -123,9 +129,13 @@ const BottomStack = () => {
                 // borderRightWidth: 5,
                 borderColor: colors.white,
                 borderWidth: 5,
-                backgroundColor: colors.primary
+                backgroundColor: colors.primary,
               }}>
-              <Icon name="pencil-outline" color={colors.white} size={iconSize} />
+              <Icon
+                name="pencil-outline"
+                color={colors.white}
+                size={iconSize}
+              />
             </View>
           ),
         }}

@@ -45,6 +45,11 @@ const Post = ({item}) => {
         <View style={{flex: 1}} />
         <Icon name="dots-vertical" size={24} />
       </View>
+      <View>
+        <Text numberOfLines={2} style={styles.title}>
+          {item.title}
+        </Text>
+      </View>
       {metaData.image && metaData.image[0] && (
         <TouchableOpacity onPress={navigateToDetail}>
           <Image
@@ -54,11 +59,6 @@ const Post = ({item}) => {
           />
         </TouchableOpacity>
       )}
-      <View>
-        <Text numberOfLines={2} style={styles.title}>
-          {item.title}
-        </Text>
-      </View>
       <View style={styles.footer}>
         <Text style={styles.payout}>
           {sbdToDollar(item.pending_payout_value)}
@@ -91,6 +91,8 @@ const Post = ({item}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
+    borderRadius: 10,
+    backgroundColor: colors.white,
   },
   header: {
     flexDirection: 'row',
@@ -100,6 +102,8 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 25,
+    borderColor: colors.light_gray,
+    borderWidth: 1,
   },
   author: {
     fontWeight: 'bold',

@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 
 import Post from './Post';
+import PostPlaceHolderList from '../PostPlaceHolderList';
 import {getPosts} from '../../redux/postReducer/operations';
 
 const PostList = () => {
@@ -11,7 +12,7 @@ const PostList = () => {
   const posts = useSelector((state) => state.postReducer.posts);
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [dispatch]);
 
   const _renderItem = ({item}) => {
     return <Post item={item} />;
@@ -19,6 +20,7 @@ const PostList = () => {
 
   return (
     <FlatList
+      ListEmptyComponent={PostPlaceHolderList}
       data={posts}
       renderItem={_renderItem}
       keyExtractor={(item) => item.post_id.toString()}
@@ -29,8 +31,8 @@ const PostList = () => {
 
 const styles = StyleSheet.create({
   itemSeperator: {
-    height: 5,
-    backgroundColor: '#e3e3e3',
+    height: 10,
+    backgroundColor: '#EEEEEE',
   },
 });
 

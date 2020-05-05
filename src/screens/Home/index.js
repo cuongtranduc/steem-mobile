@@ -4,10 +4,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import PostList from '../../components/PostList';
 
+import {colors} from '../../utils/theme';
+
 const Home = () => {
   return (
     <View style={styles.container}>
-      <View
+      {/* <View
         style={{
           height: 80,
           flexDirection: 'row',
@@ -26,7 +28,7 @@ const Home = () => {
           <Text style={{fontSize: 16, color: '#333'}}>Trending</Text>
           <Icon name="menu-down" size={24} />
         </View>
-      </View>
+      </View> */}
       <PostList />
     </View>
   );
@@ -35,7 +37,8 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#EEEEEE',
+    paddingHorizontal: 15,
   },
   box: {
     paddingHorizontal: 10,
