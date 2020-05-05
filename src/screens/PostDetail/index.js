@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import {StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 
+import PostDetailPlaceHolder from './PostDetailPlaceHolder';
 import PostHeader from './PostHeader';
 import PostBody from './PostBody';
 
@@ -15,19 +9,24 @@ import client from '../../providers/dsteem';
 
 const PostDetail = ({route, navigation}) => {
   const [post, setPost] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const {data} = route.params;
     client.database.call('get_content', data).then((result) => {
-      console.log(result);
       setPost(result);
+      setIsLoading(false);
     });
   }, [route.params]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView style={styles.container}>
-        <PostHeader post={post} />
-        {post.body && <PostBody html={post.body} />}
+        <PostHeader post={route.params.post} />
+        {isLoading ? (
+          <PostDetailPlaceHolder />
+        ) : (
+          post.body && <PostBody html={post.body} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

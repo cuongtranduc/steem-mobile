@@ -4,6 +4,8 @@ import AutoHeightWebView from 'react-native-autoheight-webview';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {renderPostBody} from '@esteemapp/esteem-render-helpers';
 
+import PostDetailPlaceHolder from './PostDetailPlaceHolder';
+
 const WIDTH = Dimensions.get('window').width;
 
 const PostBody = ({html}) => {
@@ -144,9 +146,7 @@ const PostBody = ({html}) => {
       customStyle={customStyle}
       // onMessage={_handleOnLinkPress}
       // customScript={customBodyScript}
-      // renderLoading={() =>
-      //   isComment ? <CommentPlaceHolder /> : <PostPlaceHolder />
-      // }
+      renderLoading={() => <PostDetailPlaceHolder />}
       startInLoadingState={true}
       onShouldStartLoadWithRequest={false}
       scrollEnabled={false}

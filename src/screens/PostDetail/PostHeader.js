@@ -4,25 +4,21 @@ import {View, Text, StyleSheet} from 'react-native';
 import PostHeader from '../../components/PostHeader';
 
 const PostDetailHeader = ({post}) => {
+  console.log('post', post);
   return (
-    <View>
+    <View style={{marginBottom: 15}}>
+      {post.title && <Text style={styles.title}>{post.title}</Text>}
       <PostHeader item={post} />
-      <Text style={styles.title}>{post.title}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   title: {
-    marginVertical: 15,
+    marginBottom: 15,
     fontSize: 22,
     fontWeight: 'bold',
-  },
-  avatar: {
-    marginTop: 15,
-    height: 50,
-    width: 50,
-    borderRadius: 25,
+    color: '#333',
   },
 });
 

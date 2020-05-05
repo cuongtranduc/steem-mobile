@@ -22,7 +22,10 @@ const Post = ({item}) => {
   const metaData = JSON.parse(item.json_metadata);
 
   const navigateToDetail = () => {
-    Navigation.navigate('PostDetail', {data: [item.author, item.permlink]});
+    Navigation.navigate('PostDetail', {
+      data: [item.author, item.permlink],
+      post: item,
+    });
   };
 
   return (
