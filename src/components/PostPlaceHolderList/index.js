@@ -6,9 +6,9 @@ import PostPlaceHolder from './PostPlaceHolder';
 const PostPlaceHolderList = () => {
   return (
     <ScrollView>
-      {new Array(5).fill(null).map((item) => {
+      {new Array(5).fill(null).map((item, index) => {
         return (
-          <View style={{marginBottom: 10}}>
+          <View key={index} style={{marginBottom: 10}}>
             <PostPlaceHolder />
           </View>
         );

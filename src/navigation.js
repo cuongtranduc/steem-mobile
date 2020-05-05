@@ -68,14 +68,6 @@ const HomeStack = () => {
         name="Home"
         component={HomeScreen}
       />
-      <Stack.Screen name="PostDetail" component={PostDetailScreen} />
-      <Stack.Screen
-        name="Profile"
-        options={{
-          headerShown: false,
-        }}
-        component={ProfileScreen}
-      />
     </Stack.Navigator>
   );
 };
@@ -154,11 +146,40 @@ const BottomStack = () => {
   );
 };
 
+const MainStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="BottomStack"
+        component={BottomStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PostDetail"
+        component={PostDetailScreen}
+        options={{
+          title: '',
+          headerBackTitle: 'Home',
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        options={{
+          headerShown: false,
+        }}
+        component={ProfileScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const RootNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Drawer.Navigator initialRouteName="BottomStack" mode="modal">
-        <Drawer.Screen name="BottomStack" component={BottomStack} />
+      <Drawer.Navigator initialRouteName="MainStack" mode="modal">
+        <Drawer.Screen name="MainStack" component={MainStack} />
         <Drawer.Screen name="Login" component={LoginStack} />
       </Drawer.Navigator>
     </NavigationContainer>
