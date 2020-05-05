@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {View, FlatList, StyleSheet} from 'react-native';
@@ -9,13 +9,25 @@ import {getPosts} from '../../redux/postReducer/operations';
 
 const PostList = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.postReducer.posts);
+  const [isRefresh, setIsRefresh] = useState(false);
+  const {posts, isLoading} = useSelector((state) => state.postReducer);
   useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+    _getPost();
+  }, [_getPost]);
 
   const _renderItem = ({item}) => {
     return <Post item={item} />;
+  };
+
+  const _getPost = useCallback(() => !isLoading && dispatch(getPosts()), [
+    dispatch,
+    isLoading,
+  ]);
+
+  const _onRefresh = () => {
+    setIsRefresh(true);
+    setTimeout(() => setIsRefresh(false), 1500);
+    _getPost();
   };
 
   return (
@@ -25,6 +37,8 @@ const PostList = () => {
       renderItem={_renderItem}
       keyExtractor={(item) => item.post_id.toString()}
       ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
+      onRefresh={_onRefresh}
+      refreshing={isRefresh}
     />
   );
 };
