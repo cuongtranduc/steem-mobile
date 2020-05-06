@@ -1,5 +1,5 @@
 import {Client, PrivateKey} from 'dsteem';
-import {get, has} from 'lodash';
+import {get, has, isEmpty} from 'lodash';
 import {
   getName,
   getAvatar,
@@ -77,19 +77,20 @@ export async function getUser(user) {
     ) {
       try {
         _account.about =
-          JSON.parse(get(_account, 'posting_json_metadata')) ||
-          JSON.parse(get(_account, 'json_metadata'));
+          get(_account, 'posting_json_metadata') !== ''
+            ? JSON.parse(get(_account, 'posting_json_metadata'))
+            : JSON.parse(get(_account, 'json_metadata'));
       } catch (e) {
         _account.about = {};
       }
     }
 
-    _account.avatar = getAvatar(get(_account, 'about'));
-    _account.coverImage = getCoverImage(get(_account, 'about'));
-    _account.location = getLocation(get(_account, 'about'));
-    _account.display_name = getName(get(_account, 'about'));
-    _account.website = getWebsite(get(_account, 'about'));
-    _account.description = getDescription(get(_account, 'about'));
+    _account.avatar = getAvatar(_account.about);
+    _account.coverImage = getCoverImage(_account.about);
+    _account.location = getLocation(_account.about);
+    _account.display_name = getName(_account.about);
+    _account.website = getWebsite(_account.about);
+    _account.description = getDescription(_account.about);
     _account.following = follows.following_count;
     _account.followers = follows.follower_count;
 
@@ -97,6 +98,7 @@ export async function getUser(user) {
 
     return _account;
   } catch (error) {
+    console.log(error);
     return Promise.reject(error);
   }
 }
