@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     height: screenHeight / 5,
     width: '100%',
+    backgroundColor: colors.exexlight_gray,
   },
   postMetadata: {
     paddingLeft: 15,

@@ -2,13 +2,11 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
-const FirstRoute = () => (
-  <View style={[styles.scene, {backgroundColor: '#fff'}]} />
-);
+import Posts from '../../../components/PostList';
 
-const SecondRoute = () => (
-  <View style={[styles.scene, {backgroundColor: '#fff'}]} />
-);
+const FirstRoute = () => <Posts />;
+
+const SecondRoute = () => <Posts />;
 
 const initialLayout = {width: Dimensions.get('window').width};
 

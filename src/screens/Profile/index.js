@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 import Avatar from '../../components/Avatar';
 import PostList from './PostList';
@@ -22,12 +23,11 @@ import {longDateFormat} from '../../utils/time';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-const Profile = ({route}) => {
+const Profile = ({route, navigation}) => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('_account 1111111');
     getUserInfo();
   }, []);
 
@@ -41,72 +41,89 @@ const Profile = ({route}) => {
 
   return (
     <View style={styles.container}>
-      {!isLoading && (
-        <View style={{flex: 1}}>
-          <FastImage
-            source={
-              user.coverImage
-                ? {
-                    uri: user.coverImage,
-                    priority: FastImage.priority.high,
-                  }
-                : require('../../assets/images/steem_cover.jpg')
-            }
-            resizeMode={FastImage.resizeMode.cover}
-            style={styles.coverImage}
+      <View style={{flex: 1}}>
+        <FastImage
+          source={
+            user.coverImage
+              ? {
+                  uri: user.coverImage,
+                  priority: FastImage.priority.high,
+                }
+              : require('../../assets/images/steem_cover.jpg')
+          }
+          resizeMode={FastImage.resizeMode.cover}
+          style={styles.coverImage}
+        />
+        <View style={{padding: 15}}>
+          <Avatar
+            author={route.params.author}
+            style={styles.avatar}
+            // uri={user.avatar}
           />
-          <View style={{padding: 15}}>
-            <Avatar style={styles.avatar} uri={user.avatar} />
-            <Text style={styles.name}>{user.name}</Text>
-            {user.description && (
-              <Text style={styles.description}>{user.description}</Text>
+          <Text style={styles.name}>{user.name}</Text>
+          {user.description && (
+            <Text style={styles.description}>{user.description}</Text>
+          )}
+          <View style={{marginTop: 10}}>
+            {user.website && (
+              <View style={[styles.locationContainer]}>
+                <Icon name="link-variant" size={22} color="#333" />
+                <Text style={styles.website}>{user.website}</Text>
+              </View>
             )}
-            <View style={{marginTop: 10}}>
-              {user.website && (
-                <View style={[styles.locationContainer]}>
-                  <Icon name="link-variant" size={22} color="#333" />
-                  <Text style={styles.website}>{user.website}</Text>
-                </View>
-              )}
-              {user.location && (
-                <View style={[styles.locationContainer, {marginTop: 5}]}>
-                  <Icon name="map-marker" size={22} color="#333" />
-                  <Text style={styles.location}>{user.location}</Text>
-                </View>
-              )}
+            {user.location && (
               <View style={[styles.locationContainer, {marginTop: 5}]}>
-                <Icon name="calendar-range" size={22} color="#333" />
-                <Text style={styles.location}>{`Joined ${longDateFormat(
-                  user.created,
-                )}`}</Text>
+                <Icon name="map-marker" size={22} color="#333" />
+                <Text style={styles.location}>{user.location}</Text>
               </View>
-            </View>
-            <View style={{flexDirection: 'row', marginTop: 10}}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                  {user.following}
-                </Text>
-                <Text style={{fontSize: 16, color: '#555', marginLeft: 5}}>
-                  Following
-                </Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{fontSize: 16, fontWeight: 'bold', marginLeft: 30}}>
-                  {user.followers}
-                </Text>
-                <Text style={{fontSize: 16, color: '#555', marginLeft: 5}}>
-                  Followers
-                </Text>
-              </View>
+            )}
+            <View style={[styles.locationContainer, {marginTop: 5}]}>
+              <Icon name="calendar-range" size={22} color="#333" />
+              <Text style={styles.location}>{`Joined ${longDateFormat(
+                user.created,
+              )}`}</Text>
             </View>
           </View>
-          <PostList />
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                {user.following}
+              </Text>
+              <Text style={{fontSize: 16, color: '#555', marginLeft: 5}}>
+                Following
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', marginLeft: 30}}>
+                {user.followers}
+              </Text>
+              <Text style={{fontSize: 16, color: '#555', marginLeft: 5}}>
+                Followers
+              </Text>
+            </View>
+          </View>
         </View>
-      )}
-      {/* <TouchableOpacity style={{position: 'absolute', left: 15, top: 15, right: 0, bottom: 0}}>
-        <Icon name="keyboard-backspace" size={25} color="#fff" />
-      </TouchableOpacity> */}
+        <PostList />
+      </View>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          position: 'absolute',
+          left: 15,
+          top: getStatusBarHeight() + 5,
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          borderRadius: 15,
+        }}>
+        <Icon
+          name="keyboard-backspace"
+          size={24}
+          color="#fff"
+          style={{
+            borderRadius: 12,
+            padding: 3,
+          }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

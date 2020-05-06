@@ -29,8 +29,8 @@ const HomeStack = () => {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: colors.white,
-            shadowColor: 'gray',
+            backgroundColor: colors.primary,
+            shadowColor: '#fff',
             shadowOpacity: 0.8,
             shadowRadius: 2,
             shadowOffset: {
@@ -38,7 +38,7 @@ const HomeStack = () => {
               width: 0,
             },
           },
-          headerTintColor: colors.dark_gray,
+          headerTintColor: colors.white,
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 20,
@@ -49,7 +49,7 @@ const HomeStack = () => {
                 style={{marginLeft: 15}}
                 name="account-circle"
                 size={iconSize}
-                color={colors.light_gray}
+                color={colors.white}
               />
             </TouchableOpacity>
           ),
@@ -58,7 +58,7 @@ const HomeStack = () => {
               <Icon
                 name="bell"
                 size={iconSize}
-                color={colors.light_gray}
+                color={colors.white}
                 style={{marginRight: 15}}
               />
               {/* <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" /> */}
@@ -109,9 +109,9 @@ const BottomStack = () => {
           tabBarIcon: ({color}) => (
             <View
               style={{
-                height: iconSize * 2.2,
-                width: iconSize * 2.2,
-                borderRadius: iconSize * 1.1,
+                height: iconSize * 2,
+                width: iconSize * 2,
+                borderRadius: iconSize * 1,
                 justifyContent: 'center',
                 alignItems: 'center',
                 bottom: iconSize / 4,
