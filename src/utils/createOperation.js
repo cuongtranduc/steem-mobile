@@ -39,7 +39,7 @@ export default ({message = {}, actions = {}, process = () => {}}) => (
 
       return result;
     } catch (error) {
-      failAction && dispatch(failAction(error));
+      failAction && dispatch(failAction(error.toString()));
 
       !!failMessage &&
         Alert.alert(

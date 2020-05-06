@@ -1,5 +1,6 @@
 import createOperation from '../../utils/createOperation';
 import slice from './slice';
+import {actions as StorageActions} from '../storageReducer';
 import * as dsteem from '../../providers/dsteem';
 
 const {
@@ -12,9 +13,9 @@ export const login = createOperation({
     successAction: successLogin,
     failAction: failLogin,
   },
-  process: ({payload}) => {
-    const privateKey = dsteem.login(payload.username, payload.password);
-    console.log(privateKey);
-    return {};
+  process: async ({payload, dispatch}) => {
+    const account = await dsteem.login(payload.username, payload.password);
+    payload.isRemember && dispatch(StorageActions.setAccount(account));
+    return account;
   },
 });

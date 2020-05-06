@@ -8,10 +8,14 @@ const storage = createSlice({
   name: 'storageReducer',
   initialState,
   reducers: {
-    setAccount: (state, {payload}) => ({...state, account: payload.account}),
+    setAccount: (state, {payload}) => ({...state, account: payload}),
   },
 });
 
 export const {reducer} = storage;
+
+export const actions = {
+  ...storage.actions,
+};
 
 export default storage;

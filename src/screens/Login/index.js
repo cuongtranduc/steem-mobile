@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,10 +7,12 @@ import {
   Dimensions,
   TouchableOpacity,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {isEmpty} from 'lodash';
 
 import Input from '../../components/Input';
 
@@ -24,23 +26,31 @@ const screenHeight = Dimensions.get('window').height;
 
 const SIGNUP_URL = 'https://signup.steemit.com/';
 
-const Account = () => {
+const Account = ({navigation}) => {
   const dispacth = useDispatch();
-  const [isRemember, setIsRemember] = useState(false);
+  const [isRemember, setIsRemember] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {isLoading} = useSelector((state) => state.accountReducer);
+  const {account} = useSelector((state) => state.accountReducer);
+
+  useEffect(() => {
+    if (!isEmpty(account)) {
+      navigation.goBack();
+    }
+  }, [account, navigation]);
 
   const _onSetRememberMe = () => {
     setIsRemember(!isRemember);
   };
 
-  const _login = () => {
-    dispacth(login({username, password}));
+  const _login = async () => {
+    dispacth(login({username, password, isRemember}));
   };
 
   const isLoginDisabled = useCallback(() => {
-    return username === '' || password === '';
-  }, [username, password]);
+    return username === '' || password === '' || isLoading;
+  }, [username, password, isLoading]);
 
   return (
     <View style={{flex: 1}}>
@@ -54,11 +64,13 @@ const Account = () => {
           <Text style={styles.signInText}>Sign in to access more content</Text>
         </View>
         <Input
+          autoCapitalize="none"
           value={username}
           onValueChange={(value) => setUsername(value)}
           icon="account-circle"
         />
         <Input
+          autoCapitalize="none"
           isPassword={true}
           value={password}
           onValueChange={(value) => setPassword(value)}
@@ -92,6 +104,13 @@ const Account = () => {
       <TouchableOpacity onPress={() => goBack()} style={styles.closeIcon}>
         <Icon name="close" size={30} />
       </TouchableOpacity>
+      {isLoading && (
+        <ActivityIndicator
+          size="large"
+          color={colors.primary}
+          style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}
+        />
+      )}
     </View>
   );
 };

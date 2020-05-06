@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {POST_CATEGORY} from '../../utils/constants';
 
 const initialState = {
   account: {},

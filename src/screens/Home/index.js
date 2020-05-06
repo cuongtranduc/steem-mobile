@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Modal from 'react-native-modal';
 
 import PostList from '../../components/PostList';
+import Login from '../../screens/Login';
 
 import {colors} from '../../utils/theme';
 
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EEEEEE',
-    paddingHorizontal: 15,
+    padding: 15,
   },
   box: {
     paddingHorizontal: 10,

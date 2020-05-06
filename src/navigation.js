@@ -4,7 +4,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {TransitionPresets} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
+import {isEmpty} from 'lodash';
 
 import HomeScreen from './screens/Home';
 import PostDetailScreen from './screens/PostDetail';
@@ -14,6 +17,7 @@ import LoginScreen from './screens/Login';
 import WalletScreen from './screens/Wallet';
 import AccountScreen from './screens/Account';
 
+import Avatar from './components/Avatar';
 import {colors} from './utils/theme';
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +27,9 @@ const Drawer = createDrawerNavigator();
 const navigationRef = React.createRef();
 const iconSize = Platform.OS === 'ios' ? 30 : 24;
 
-const HomeStack = () => {
+const HomeStack = ({navigation}) => {
+  const {account} = useSelector((state) => state.storageReducer);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -43,16 +49,32 @@ const HomeStack = () => {
             fontWeight: 'bold',
             fontSize: 20,
           },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigate('Login')}>
-              <Icon
-                style={{marginLeft: 15}}
-                name="account-circle"
-                size={iconSize}
-                color={colors.white}
-              />
-            </TouchableOpacity>
-          ),
+          headerLeft: () => {
+            return isEmpty(account) ? (
+              <TouchableOpacity onPress={() => navigate('Login')}>
+                <Icon
+                  style={{marginLeft: 15}}
+                  name="account-circle"
+                  size={iconSize}
+                  color={colors.white}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Avatar
+                  style={{
+                    marginLeft: 15,
+                    height: iconSize,
+                    width: iconSize,
+                    borderRadius: iconSize / 2,
+                    borderWidth: 1,
+                    borderColor: '#FFF',
+                  }}
+                  uri={account.avatar}
+                />
+              </TouchableOpacity>
+            );
+          },
           headerRight: () => (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Icon
@@ -72,21 +94,8 @@ const HomeStack = () => {
   );
 };
 
-const LoginStack = () => {
-  return (
-    <Stack.Navigator mode="modal">
-      <Stack.Screen
-        name="Login"
-        options={{
-          headerShown: false,
-        }}
-        component={LoginScreen}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const BottomStack = () => {
+const BottomStack = ({navigation}) => {
+  const {account} = useSelector((state) => state.storageReducer);
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -140,6 +149,16 @@ const BottomStack = () => {
             <Icon name="wallet" color={color} size={iconSize} />
           ),
           showLabel: false,
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              {...props}
+              onPress={() => {
+                isEmpty(account)
+                  ? navigation.navigate('Login')
+                  : navigation.navigate('Wallet');
+              }}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
@@ -171,6 +190,14 @@ const MainStack = () => {
         }}
         component={ProfileScreen}
       />
+      <Stack.Screen
+        name="Login"
+        options={{
+          headerShown: false,
+          ...TransitionPresets.ModalTransition,
+        }}
+        component={LoginScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -178,9 +205,9 @@ const MainStack = () => {
 const RootNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Drawer.Navigator initialRouteName="MainStack" mode="modal">
+      <Drawer.Navigator initialRouteName="MainStack">
         <Drawer.Screen name="MainStack" component={MainStack} />
-        <Drawer.Screen name="Login" component={LoginStack} />
+        {/* <Drawer.Screen name="Login" component={LoginStack} /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

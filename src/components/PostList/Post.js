@@ -28,7 +28,7 @@ const Post = ({item}) => {
     });
   };
 
-  return (
+  return ( 
     <View style={styles.container}>
       <PostHeder item={item} />
       <View>
