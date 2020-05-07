@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React from 'react';
 import FastImage from 'react-native-fast-image';
 
 const Avatar = ({author, style, uri}) => {

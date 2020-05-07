@@ -17,6 +17,7 @@ import LoginScreen from './screens/Login';
 import WalletScreen from './screens/Wallet';
 import AccountScreen from './screens/Account';
 
+import CustomDrawerContent from './components/CustomDrawerContent';
 import Avatar from './components/Avatar';
 import {colors} from './utils/theme';
 
@@ -64,9 +65,9 @@ const HomeStack = ({navigation}) => {
                 <Avatar
                   style={{
                     marginLeft: 15,
-                    height: iconSize,
-                    width: iconSize,
-                    borderRadius: iconSize / 2,
+                    height: iconSize + 1,
+                    width: iconSize + 1,
+                    borderRadius: (iconSize + 1) / 2,
                     borderWidth: 1,
                     borderColor: '#FFF',
                   }}
@@ -205,7 +206,10 @@ const MainStack = () => {
 const RootNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Drawer.Navigator initialRouteName="MainStack">
+      <Drawer.Navigator
+        drawerStyle={{width: '75%'}}
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        initialRouteName="MainStack">
         <Drawer.Screen name="MainStack" component={MainStack} />
         {/* <Drawer.Screen name="Login" component={LoginStack} /> */}
       </Drawer.Navigator>

@@ -58,7 +58,7 @@ const Profile = ({route, navigation}) => {
           <Avatar
             author={route.params.author}
             style={styles.avatar}
-            // uri={user.avatar}
+            uri={user.avatar}
           />
           <Text style={styles.name}>{user.name}</Text>
           {user.description && (
