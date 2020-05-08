@@ -30,6 +30,13 @@ export function getUserPosts({author}) {
   });
 }
 
+export function getUserComments({author}) {
+  // query string, fetching comments made by @steemitblog account
+  const query = `/@${author}/comments`;
+
+  return client.database.call('get_state', [query]);
+}
+
 export async function getUser(user) {
   try {
     const [account, follows] = await Promise.all([

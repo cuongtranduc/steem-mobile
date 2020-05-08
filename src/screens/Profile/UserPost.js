@@ -4,7 +4,7 @@ import Post from '../../components/PostList/Post';
 import PostPlaceHolderList from '../../components/PostPlaceHolderList';
 import {getUserPosts} from '../../providers/dsteem';
 
-const PostList = ({author}) => {
+const UserPost = ({author}) => {
   const isCancelled = React.useRef(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(PostList);
+export default React.memo(UserPost);

@@ -8,7 +8,7 @@ import {fromNow} from '../utils/time';
 import {colors} from '../utils/theme';
 import * as Navigation from '../navigation';
 
-const Post = ({item}) => {
+const PostHeader = ({item, hideOption}) => {
   const navigateToProfile = () => {
     Navigation.navigate('Profile', {author: item.author});
   };
@@ -19,13 +19,26 @@ const Post = ({item}) => {
         <Avatar style={styles.avatar} author={item.author} />
       </TouchableOpacity>
       <View style={styles.postMetadata}>
-        <TouchableOpacity onPress={navigateToProfile}>
-          <Text style={styles.author}>{item.author}</Text>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity onPress={navigateToProfile}>
+            <Text style={styles.author}>{item.author}</Text>
+          </TouchableOpacity>
+          {item.category && (
+            <>
+              <Text
+                style={{fontSize: 14, color: colors.dark_gray, marginLeft: 10}}>
+                in
+              </Text>
+              <Text style={{fontSize: 14, color: colors.primary}}>
+                {` #${item.category}`}
+              </Text>
+            </>
+          )}
+        </View>
         <Text style={styles.fromNow}>{fromNow(item.last_update)}</Text>
       </View>
       <View style={{flex: 1}} />
-      <Icon name="dots-vertical" size={24} />
+      {!hideOption && <Icon name="dots-vertical" size={24} />}
     </View>
   );
 };
@@ -57,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Post;
+export default React.memo(PostHeader);

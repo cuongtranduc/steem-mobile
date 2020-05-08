@@ -7,13 +7,12 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 
 import PostHeder from '../PostHeader';
+import PostFooter from '../PostFooter';
 
 import {colors} from '../../utils/theme';
-import {sbdToDollar} from '../../utils/money';
 import * as Navigation from '../../navigation';
 
 const screenHeight = Dimensions.get('window').height;
@@ -47,31 +46,7 @@ const Post = ({item}) => {
           />
         </TouchableOpacity>
       )}
-      <View style={styles.footer}>
-        <Text style={styles.payout}>
-          {sbdToDollar(item.pending_payout_value)}
-        </Text>
-        <View
-          style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="heart-outline" size={18} color={colors.dark_gray} />
-          <Text style={styles.votes}>{item.active_votes.length}</Text>
-        </View>
-        <View
-          style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
-            name="comment-multiple-outline"
-            size={18}
-            color={colors.dark_gray}
-          />
-          <Text style={styles.votes}>{item.children}</Text>
-        </View>
-        <View style={{flex: 1}} />
-        <View
-          style={{marginRight: 5, flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="share" size={18} color={colors.dark_gray} />
-          <Text style={styles.votes}>0</Text>
-        </View>
-      </View>
+      <PostFooter item={item} />
     </View>
   );
 };
@@ -117,20 +92,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-  },
-  footer: {
-    marginTop: 15,
-    flexDirection: 'row',
-  },
-  payout: {
-    fontSize: 18,
-    lineHeight: 18,
-    color: colors.dark_gray,
-  },
-  votes: {
-    fontSize: 18,
-    color: colors.dark_gray,
-    lineHeight: 18,
   },
 });
 

@@ -1,8 +1,9 @@
 import React, {useMemo} from 'react';
-import {View, Dimensions, StyleSheet} from 'react-native';
+import {View, Dimensions, StyleSheet, SafeAreaView} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {colors} from '../../utils/theme';
 import UserPost from './UserPost';
+import UserComment from './UserComment';
 
 const SecondRoute = () => <View />;
 
@@ -20,7 +21,7 @@ const ContentTabView = ({author}) => {
     () =>
       SceneMap({
         one: () => <UserPost author={author} />,
-        two: SecondRoute,
+        two: () => <UserComment author={author} />,
         three: SecondRoute,
       }),
     [author],
@@ -36,13 +37,15 @@ const ContentTabView = ({author}) => {
   );
 
   return (
-    <TabView
-      navigationState={{index, routes}}
-      renderTabBar={renderTabBar}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-    />
+    <SafeAreaView style={{flex: 1}}>
+      <TabView
+        navigationState={{index, routes}}
+        renderTabBar={renderTabBar}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+      />
+    </SafeAreaView>
   );
 };
 
