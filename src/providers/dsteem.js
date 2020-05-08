@@ -1,25 +1,32 @@
 import {Client, PrivateKey} from 'dsteem';
-import {get, has, isEmpty} from 'lodash';
-import {
-  getName,
-  getAvatar,
-  getReputation,
-  getLocation,
-  getCoverImage,
-  getWebsite,
-  getDescription,
-} from '../utils/user';
-
+import {get, has} from 'lodash';
 import {AUTH_TYPE} from '../utils/constants';
 import {vestToSteem} from '../utils/money';
+import {
+  getAvatar,
+  getCoverImage,
+  getDescription,
+  getLocation,
+  getName,
+  getReputation,
+  getWebsite,
+} from '../utils/user';
 
 const client = new Client('https://api.steemit.com');
 
-export function getPosts({tag, limit, category}) {
+export function getPosts({tag, limit = 5, category = 'created'}) {
   return client.database.getDiscussions(category, {
     tag,
     limit,
     truncate_body: 1,
+  });
+}
+
+export function getUserPosts({author}) {
+  return client.database.getDiscussions('blog', {
+    limit: 5,
+    truncate_body: 1,
+    tag: author,
   });
 }
 
@@ -97,7 +104,6 @@ export async function getUser(user) {
 
     return _account;
   } catch (error) {
-    console.log(error);
     return Promise.reject(error);
   }
 }

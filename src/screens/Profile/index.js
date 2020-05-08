@@ -1,24 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  ActivityIndicator,
   Dimensions,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Avatar from '../../components/Avatar';
-import PostList from './PostList';
-
 import {getUser} from '../../providers/dsteem';
 import {longDateFormat} from '../../utils/time';
+import ContentTabView from './ContentTabView';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -29,15 +23,15 @@ const Profile = ({route, navigation}) => {
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [getUserInfo]);
 
-  const getUserInfo = async () => {
+  const getUserInfo = useCallback(async () => {
     const {author} = route.params;
     const _user = await getUser(author);
 
     setUser(_user);
     setIsLoading(false);
-  };
+  }, [route.params]);
 
   return (
     <View style={styles.container}>
@@ -103,7 +97,7 @@ const Profile = ({route, navigation}) => {
             </View>
           </View>
         </View>
-        <PostList />
+        <ContentTabView author={user.name} />
       </View>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
