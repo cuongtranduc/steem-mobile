@@ -29,7 +29,7 @@ const PostHeader = ({item, hideOption}) => {
                 style={{fontSize: 14, color: colors.dark_gray, marginLeft: 10}}>
                 in
               </Text>
-              <Text style={{fontSize: 14, color: colors.primary}}>
+              <Text style={{fontSize: 16, color: colors.primary}}>
                 {` #${item.category}`}
               </Text>
             </>
