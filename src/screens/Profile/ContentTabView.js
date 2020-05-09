@@ -1,15 +1,14 @@
 import React, {useMemo} from 'react';
-import {View, Dimensions, StyleSheet, SafeAreaView} from 'react-native';
+import {Dimensions, StyleSheet, SafeAreaView} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {colors} from '../../utils/theme';
 import UserPost from './UserPost';
 import UserComment from './UserComment';
-
-const SecondRoute = () => <View />;
+import UserWallet from './UserWallet';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
-const ContentTabView = ({author}) => {
+const ContentTabView = ({author, user}) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'one', title: 'Post'},
@@ -22,9 +21,9 @@ const ContentTabView = ({author}) => {
       SceneMap({
         one: () => <UserPost author={author} />,
         two: () => <UserComment author={author} />,
-        three: SecondRoute,
+        three: () => <UserWallet user={user} />,
       }),
-    [author],
+    [author, user],
   );
 
   const renderTabBar = (props) => (

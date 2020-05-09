@@ -32,6 +32,7 @@ const PostList = () => {
 
   return (
     <FlatList
+      style={{paddingVertical: 5}}
       ListEmptyComponent={PostPlaceHolderList}
       data={posts}
       renderItem={_renderItem}
@@ -45,7 +46,7 @@ const PostList = () => {
 
 const styles = StyleSheet.create({
   itemSeperator: {
-    height: 10,
+    height: 5,
     backgroundColor: '#EEEEEE',
   },
 });

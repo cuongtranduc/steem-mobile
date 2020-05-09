@@ -44,6 +44,12 @@ const UserPost = ({author}) => {
 
   return (
     <FlatList
+      style={{backgroundColor: '#EEE'}}
+      contentContainerStyle={{
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        backgroundColor: '#EEE',
+      }}
       ListEmptyComponent={PostPlaceHolderList}
       data={posts}
       renderItem={_renderItem}
@@ -57,7 +63,7 @@ const UserPost = ({author}) => {
 
 const styles = StyleSheet.create({
   itemSeperator: {
-    height: 10,
+    height: 5,
     backgroundColor: '#EEEEEE',
   },
 });

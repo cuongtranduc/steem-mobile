@@ -13,6 +13,7 @@ import Avatar from '../../components/Avatar';
 import {getUser} from '../../providers/dsteem';
 import {longDateFormat} from '../../utils/time';
 import ContentTabView from './ContentTabView';
+import UserWallet from './UserWallet';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -28,7 +29,7 @@ const Profile = ({route, navigation}) => {
   const getUserInfo = useCallback(async () => {
     const {author} = route.params;
     const _user = await getUser(author);
-
+    console.log('user', _user);
     setUser(_user);
     setIsLoading(false);
   }, [route.params]);
@@ -97,7 +98,7 @@ const Profile = ({route, navigation}) => {
             </View>
           </View>
         </View>
-        <ContentTabView author={user.name} />
+        <ContentTabView user={user} author={user.name} />
       </View>
       <TouchableOpacity
         onPress={() => navigation.goBack()}

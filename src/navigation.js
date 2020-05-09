@@ -36,16 +36,16 @@ const HomeStack = ({navigation}) => {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: colors.primary,
-            shadowColor: '#fff',
-            shadowOpacity: 0.8,
+            backgroundColor: colors.white,
+            shadowColor: '#000',
+            shadowOpacity: 0.5,
             shadowRadius: 2,
             shadowOffset: {
               height: 1,
               width: 0,
             },
           },
-          headerTintColor: colors.white,
+          headerTintColor: '#333',
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 20,
@@ -81,7 +81,7 @@ const HomeStack = ({navigation}) => {
               <Icon
                 name="bell"
                 size={iconSize}
-                color={colors.white}
+                color={'#333'}
                 style={{marginRight: 15}}
               />
               {/* <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" /> */}

@@ -27,7 +27,7 @@ const PostFooter = ({item, hideShare}) => {
       {!hideShare && (
         <View
           style={{marginRight: 5, flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="share" size={18} color={colors.dark_gray} />
+          <Icon name="share" size={18} color={colors.primary} />
           <Text style={styles.votes}>0</Text>
         </View>
       )}

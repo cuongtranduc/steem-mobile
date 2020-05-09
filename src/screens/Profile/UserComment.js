@@ -9,8 +9,6 @@ import {getUserComments} from '../../providers/dsteem';
 import * as Navigation from '../../navigation';
 
 const Comment = ({comment}) => {
-  console.log(comment);
-
   const navigateToDetail = useCallback(() => {
     Navigation.navigate('PostDetail', {
       data: [comment.author, comment.permlink],
@@ -23,7 +21,13 @@ const Comment = ({comment}) => {
   }, [comment]);
 
   return (
-    <View style={{paddingVertical: 10, paddingHorizontal: 15}}>
+    <View
+      style={{
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+      }}>
       <PostHeader
         item={{
           author: comment.author,
@@ -70,7 +74,6 @@ const UserComment = ({author}) => {
     try {
       const _comments = await getUserComments({author});
       if (!isCancelled.current) {
-        console.log(_comments.content);
         setComments(Object.values(_comments.content));
       }
     } catch (err) {
@@ -86,6 +89,12 @@ const UserComment = ({author}) => {
 
   return (
     <FlatList
+      style={{backgroundColor: '#EEE'}}
+      contentContainerStyle={{
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        backgroundColor: '#EEE',
+      }}
       ListEmptyComponent={PostPlaceHolderList}
       data={comments}
       renderItem={_renderItem}
@@ -99,7 +108,7 @@ const UserComment = ({author}) => {
 
 const styles = StyleSheet.create({
   itemSeperator: {
-    height: 10,
+    height: 5,
     backgroundColor: '#EEEEEE',
   },
 });
