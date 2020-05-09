@@ -81,6 +81,8 @@ const styles = EStyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+    borderWidth: 3,
+    borderColor: 'rgba(2, 184, 117, 1)',
   },
   name: {
     fontSize: 20,

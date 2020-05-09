@@ -22,11 +22,11 @@ export function getPosts({tag, limit = 5, category = 'created'}) {
   });
 }
 
-export function getUserPosts({author}) {
+export function getUserPosts(query) {
   return client.database.getDiscussions('blog', {
     limit: 5,
     truncate_body: 1,
-    tag: author,
+    ...query,
   });
 }
 

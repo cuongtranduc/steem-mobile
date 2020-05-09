@@ -37,47 +37,49 @@ const Profile = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
-        <FastImage
-          source={
-            user.coverImage
-              ? {
-                  uri: user.coverImage,
-                  priority: FastImage.priority.high,
-                }
-              : require('../../assets/images/steem_cover.jpg')
-          }
-          resizeMode={FastImage.resizeMode.cover}
-          style={styles.coverImage}
-        />
+        <View style={styles.coverContainer}>
+          <FastImage
+            source={
+              user.coverImage
+                ? {
+                    uri: user.coverImage,
+                    priority: FastImage.priority.high,
+                  }
+                : require('../../assets/images/steem_cover.jpg')
+            }
+            resizeMode={FastImage.resizeMode.cover}
+            style={styles.coverImage}
+          />
+        </View>
         <View style={{padding: 15}}>
           <Avatar
             author={route.params.author}
             style={styles.avatar}
             uri={user.avatar}
           />
-          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.name}>{route.params.author}</Text>
           {user.description && (
             <Text style={styles.description}>{user.description}</Text>
           )}
           <View style={{marginTop: 10}}>
-            {user.website && (
-              <View style={[styles.locationContainer]}>
-                <Icon name="link-variant" size={22} color="#333" />
-                <Text style={styles.website}>{user.website}</Text>
-              </View>
-            )}
+            <View style={[styles.locationContainer, {marginTop: 5}]}>
+              <Icon name="calendar-range" size={22} color="#333" />
+              <Text style={styles.joinedDate}>{`Member since ${longDateFormat(
+                user.created,
+              )}`}</Text>
+            </View>
             {user.location && (
               <View style={[styles.locationContainer, {marginTop: 5}]}>
                 <Icon name="map-marker" size={22} color="#333" />
                 <Text style={styles.location}>{user.location}</Text>
               </View>
             )}
-            <View style={[styles.locationContainer, {marginTop: 5}]}>
-              <Icon name="calendar-range" size={22} color="#333" />
-              <Text style={styles.location}>{`Joined ${longDateFormat(
-                user.created,
-              )}`}</Text>
-            </View>
+            {user.website && (
+              <View style={[styles.locationContainer]}>
+                <Icon name="link-variant" size={22} color="#333" />
+                <Text style={styles.website}>{user.website}</Text>
+              </View>
+            )}
           </View>
           <View style={{flexDirection: 'row', marginTop: 10}}>
             <View style={{flexDirection: 'row'}}>
@@ -133,10 +135,20 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'gray',
   },
+  coverContainer: {
+    shadowColor: 'gray',
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    elevation: 5,
+  },
   avatar: {
     marginTop: -(screenWidth / 10 + 15),
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: '#EEE',
     height: screenWidth / 5,
     width: screenWidth / 5,
     borderRadius: screenWidth / 10,
@@ -144,7 +156,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     letterSpacing: 1,
-    color: '#555',
+    color: '#000',
   },
   description: {
     marginTop: 10,
@@ -160,6 +172,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     color: '#555',
+  },
+  joinedDate: {
+    marginLeft: 5,
+    fontSize: 16,
+    lineHeight: 22,
+    color: '#278C73',
   },
   website: {
     marginLeft: 5,
