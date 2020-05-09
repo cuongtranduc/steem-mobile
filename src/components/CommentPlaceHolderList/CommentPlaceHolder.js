@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 
 import {colors} from '../../utils/theme';
 import {
@@ -17,21 +10,18 @@ import {
 } from 'rn-placeholder';
 
 const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 
-const PostPlaceHolder = ({item}) => {
+const CommentPlaceHolder = ({item}) => {
   return (
     <Placeholder style={styles.container} Animation={Fade}>
       <View style={styles.header}>
         <PlaceholderMedia style={styles.avatar} />
-        {/* <View style={styles.postMetadata}>
+        <View style={styles.postMetadata}>
           <PlaceholderLine width={30} />
-          <PlaceholderLine width={30} />
-        </View> */}
+        </View>
       </View>
       <PlaceholderLine width={screenWidth * 0.2} />
       <PlaceholderLine width={screenWidth * 0.1} />
-      <PlaceholderMedia style={styles.thumbnail} />
     </Placeholder>
   );
 };
@@ -61,10 +51,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.dark_gray,
   },
-  thumbnail: {
-    height: screenHeight / 5,
-    width: '100%',
-  },
   postMetadata: {
     flex: 1,
     paddingLeft: 15,
@@ -92,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostPlaceHolder;
+export default CommentPlaceHolder;

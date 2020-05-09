@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
-import PostPlaceHolderList from '../../components/PostPlaceHolderList';
+import CommentPlaceHolderList from '../../components/CommentPlaceHolderList';
 import PostHeader from '../../components/PostHeader';
 import PostFooter from '../../components/PostFooter';
 import {getUserComments} from '../../providers/dsteem';
@@ -95,7 +95,7 @@ const UserComment = ({author}) => {
         paddingHorizontal: 15,
         backgroundColor: '#EEE',
       }}
-      ListEmptyComponent={PostPlaceHolderList}
+      ListEmptyComponent={CommentPlaceHolderList}
       data={comments}
       renderItem={_renderItem}
       keyExtractor={(item) => item.post_id.toString()}
