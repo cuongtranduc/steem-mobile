@@ -15,12 +15,12 @@ const PostFooter = ({item, hideShare}) => {
       </Text>
       <View
         style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="arrow-up-drop-circle-outline" size={18} color={'#06D6A9'} />
+        <Icon name="heart" size={18} color={'#f77'} />
         <Text style={styles.votes}>{item.active_votes.length}</Text>
       </View>
       <View
         style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="comment-multiple" size={18} color={colors.dark_gray} />
+        <Icon name="comment-multiple-outline" size={18} color={'#06D6A9'} />
         <Text style={styles.votes}>{item.children}</Text>
       </View>
       <View style={{flex: 1}} />
@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
   },
   payout: {
     fontSize: 18,
-    lineHeight: 18,
+    lineHeight: 21,
   },
   votes: {
     marginLeft: 3,
     fontSize: 18,
-    lineHeight: 18,
+    lineHeight: 21,
   },
 });
 

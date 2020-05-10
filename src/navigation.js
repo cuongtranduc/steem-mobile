@@ -28,6 +28,18 @@ const Drawer = createDrawerNavigator();
 const navigationRef = React.createRef();
 const iconSize = Platform.OS === 'ios' ? 30 : 24;
 
+const headerStyle = {
+  backgroundColor: colors.white,
+  shadowColor: '#000',
+  shadowOpacity: 0.5,
+  shadowRadius: 2,
+  shadowOffset: {
+    height: 1,
+    width: 0,
+  },
+  evaluation: 5,
+};
+
 const HomeStack = ({navigation}) => {
   const {account} = useSelector((state) => state.storageReducer);
 
@@ -35,16 +47,7 @@ const HomeStack = ({navigation}) => {
     <Stack.Navigator>
       <Stack.Screen
         options={{
-          headerStyle: {
-            backgroundColor: colors.white,
-            shadowColor: '#000',
-            shadowOpacity: 0.5,
-            shadowRadius: 2,
-            shadowOffset: {
-              height: 1,
-              width: 0,
-            },
-          },
+          headerStyle,
           headerTintColor: '#333',
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -76,17 +79,17 @@ const HomeStack = ({navigation}) => {
               </TouchableOpacity>
             );
           },
-          headerRight: () => (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon
-                name="bell"
-                size={iconSize}
-                color={'#333'}
-                style={{marginRight: 15}}
-              />
-              {/* <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" /> */}
-            </View>
-          ),
+          // headerRight: () => (
+          //   <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          //     <Icon
+          //       name="bell"
+          //       size={iconSize}
+          //       color={'#333'}
+          //       style={{marginRight: 15}}
+          //     />
+          //     {/* <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" /> */}
+          //   </View>
+          // ),
         }}
         name="Home"
         component={HomeScreen}
@@ -182,6 +185,7 @@ const MainStack = () => {
         options={{
           title: '',
           headerBackTitle: 'Home',
+          headerStyle,
         }}
       />
       <Stack.Screen

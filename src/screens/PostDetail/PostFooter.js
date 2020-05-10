@@ -12,19 +12,15 @@ const PostFooter = ({item}) => {
         {sbdToDollar(item.pending_payout_value)}
       </Text>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="heart-outline" size={18} color={colors.dark_gray} />
+        <Icon name="heart" size={18} color={'#f77'} />
         <Text style={styles.votes}>{item.active_votes.length}</Text>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon
-          name="comment-multiple-outline"
-          size={18}
-          color={colors.dark_gray}
-        />
+        <Icon name="comment-multiple-outline" size={18} color={'#06D6A9'} />
         <Text style={styles.votes}>{item.children}</Text>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="share" size={18} color={colors.dark_gray} />
+        <Icon name="share" size={18} color={colors.primary} />
         <Text style={styles.votes}>0</Text>
       </View>
     </View>
@@ -41,11 +37,9 @@ const styles = StyleSheet.create({
   payout: {
     fontSize: 18,
     lineHeight: 21,
-    color: colors.dark_gray,
   },
   votes: {
     fontSize: 18,
-    color: colors.dark_gray,
     lineHeight: 21,
   },
 });

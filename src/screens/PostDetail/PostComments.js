@@ -49,6 +49,7 @@ const PostComments = ({comments}) => {
         </Text>
       </View>
       <FlatList
+        contentContainerStyle={{paddingBottom: 10}}
         data={comments}
         renderItem={_renderItem}
         keyExtractor={(item) => item.id.toString()}
