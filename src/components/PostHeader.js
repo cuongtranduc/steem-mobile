@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Avatar from './Avatar';
+import PostMenu from './PostMenu';
 
 import {fromNow} from '../utils/time';
 import {colors} from '../utils/theme';
@@ -38,7 +38,7 @@ const PostHeader = ({item, hideOption}) => {
         <Text style={styles.fromNow}>{fromNow(item.last_update)}</Text>
       </View>
       <View style={{flex: 1}} />
-      {!hideOption && <Icon name="dots-vertical" size={24} />}
+      {!hideOption && <PostMenu item={item} />}
     </View>
   );
 };

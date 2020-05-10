@@ -1,5 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
+import {Text} from 'react-native';
+import {MenuProvider} from 'react-native-popup-menu';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -10,13 +12,22 @@ import theme from './utils/theme';
 
 const App = () => {
   useEffect(() => {
+    let oldRender = Text.render;
+    Text.render = function (...args) {
+      let origin = oldRender.call(this, ...args);
+      return React.cloneElement(origin, {
+        style: [{fontFamily: 'Iowan Old Style'}, origin.props.style],
+      });
+    };
     EStyleSheet.build(theme);
   }, []);
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <RootNavigator />
+        <MenuProvider>
+          <RootNavigator />
+        </MenuProvider>
       </PersistGate>
     </Provider>
   );

@@ -46,10 +46,10 @@ const CustomDrawerContent = ({navigation}) => {
             <Text style={styles.item}>Reading List</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.item}>Cuong TD</Text>
+            <Text style={styles.item}>Wallet</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.item}>cuongtd</Text>
+            <Text style={styles.item}>New Post</Text>
           </TouchableOpacity>
         </View>
         <View style={{flex: 1}} />
@@ -58,7 +58,9 @@ const CustomDrawerContent = ({navigation}) => {
             flex: 3,
           }}>
           <View style={{flex: 1}} />
-          <TouchableOpacity onPress={_logout} style={{alignSelf: 'center', marginBottom: 44}}>
+          <TouchableOpacity
+            onPress={_logout}
+            style={{alignSelf: 'center', marginBottom: 44}}>
             <Text style={[styles.item, {color: '#000'}]}>Sign out</Text>
           </TouchableOpacity>
         </View>
