@@ -9,6 +9,7 @@ import PostDetailPlaceHolder from './PostDetailPlaceHolder';
 import PostHeader from './PostHeader';
 import PostBody from './PostBody';
 import PostFooter from './PostFooter';
+import PostComments from './PostComments';
 
 import client from '../../providers/dsteem';
 
@@ -19,12 +20,17 @@ const PostDetail = ({route, navigation}) => {
     containerPaddingTop,
   } = useCollapsibleStack();
   const [post, setPost] = useState({});
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const {data} = route.params;
     client.database.call('get_content', data).then((result) => {
       setPost(result);
       setIsLoading(false);
+    });
+    client.database.call('get_content_replies', data).then((result) => {
+      console.log(result);
+      setComments(result);
     });
   }, [route.params]);
 
@@ -42,6 +48,7 @@ const PostDetail = ({route, navigation}) => {
           ) : (
             post.body && <PostBody html={post.body} />
           )}
+          <PostComments comments={comments} />
         </Animated.ScrollView>
         <View style={{position: 'absolute', bottom: 0}}>
           {!isLoading && <PostFooter item={post} />}
