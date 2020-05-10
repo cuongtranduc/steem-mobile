@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 import CommentPlaceHolderList from '../../components/CommentPlaceHolderList';
 import PostHeader from '../../components/PostHeader';
@@ -7,11 +14,12 @@ import PostFooter from '../../components/PostFooter';
 import {getUserComments} from '../../providers/dsteem';
 
 import * as Navigation from '../../navigation';
+import {colors} from '../../utils/theme';
 
 const Comment = ({comment}) => {
   const navigateToDetail = useCallback(() => {
     Navigation.navigate('PostDetail', {
-      data: [comment.author, comment.permlink],
+      data: [comment.parent_author, comment.parent_permlink],
       post: {
         author: comment.post_id,
         last_update: comment.last_update,
@@ -51,6 +59,7 @@ const Comment = ({comment}) => {
 
 const UserComment = ({author}) => {
   const isCancelled = React.useRef(false);
+  const onEndReachedCalledDuringMomentum = React.useRef(true);
   const [isRefresh, setIsRefresh] = useState(false);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,8 +72,21 @@ const UserComment = ({author}) => {
     };
   }, [getComments]);
 
-  const _renderItem = ({item}) => {
-    return <Comment comment={item} />;
+  const _renderItem = ({item, index}) => {
+    return (
+      <>
+        <Comment comment={item} />
+        {index === comments.length - 1 && isLoading && (
+          <View style={{marginVertical: 10}}>
+            <ActivityIndicator
+              size="large"
+              animating={true}
+              color={colors.primary}
+            />
+          </View>
+        )}
+      </>
+    );
   };
 
   const getComments = useCallback(async () => {
@@ -72,9 +94,13 @@ const UserComment = ({author}) => {
       return;
     }
     try {
-      const _comments = await getUserComments({author});
+      const _comments = await getUserComments({
+        start_author: author,
+        start_permlink: undefined,
+      });
       if (!isCancelled.current) {
-        setComments(Object.values(_comments.content));
+        console.log('_comments', _comments);
+        setComments(_comments);
       }
     } catch (err) {
       console.log('err', err);
@@ -87,22 +113,51 @@ const UserComment = ({author}) => {
     getComments();
   };
 
+  const _onEndReached = useCallback(async () => {
+    try {
+      if (!onEndReachedCalledDuringMomentum.current) {
+        setIsLoading(true);
+        const lastComment = comments[comments.length - 1];
+        const newComments = await getUserComments({
+          limit: 11,
+          start_author: lastComment.author,
+          start_permlink: lastComment.permlink,
+        });
+        newComments.shift();
+        if (!isCancelled.current) {
+          setComments(comments.concat(newComments));
+        }
+        onEndReachedCalledDuringMomentum.current = true;
+      }
+    } catch (err) {
+      console.log('err', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [comments]);
+
   return (
-    <FlatList
-      style={{backgroundColor: '#EEE'}}
-      contentContainerStyle={{
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-        backgroundColor: '#EEE',
-      }}
-      ListEmptyComponent={CommentPlaceHolderList}
-      data={comments}
-      renderItem={_renderItem}
-      keyExtractor={(item) => item.post_id.toString()}
-      ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
-      onRefresh={_onRefresh}
-      refreshing={isRefresh}
-    />
+    <View style={{flex: 1, backgroundColor: '#EEE'}}>
+      <FlatList
+        contentContainerStyle={{
+          paddingVertical: 5,
+          paddingHorizontal: 15,
+          backgroundColor: '#EEE',
+        }}
+        ListEmptyComponent={CommentPlaceHolderList}
+        data={comments}
+        renderItem={_renderItem}
+        keyExtractor={(item) => item.post_id.toString()}
+        ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
+        onRefresh={_onRefresh}
+        refreshing={isRefresh}
+        onEndReached={_onEndReached}
+        onEndReachedThreshold={0.5}
+        onMomentumScrollBegin={() => {
+          onEndReachedCalledDuringMomentum.current = false;
+        }}
+      />
+    </View>
   );
 };
 

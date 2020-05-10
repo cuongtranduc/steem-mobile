@@ -30,11 +30,11 @@ export function getUserPosts(query) {
   });
 }
 
-export function getUserComments({author}) {
-  // query string, fetching comments made by @steemitblog account
-  const query = `/@${author}/comments`;
-
-  return client.database.call('get_state', [query]);
+export function getUserComments(query) {
+  return client.database.getDiscussions('comments', {
+    limit: 10,
+    ...query,
+  });
 }
 
 export async function getUser(user) {
