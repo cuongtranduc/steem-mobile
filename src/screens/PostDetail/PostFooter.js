@@ -23,8 +23,7 @@ const PostFooter = ({item}) => {
         />
         <Text style={styles.votes}>{item.children}</Text>
       </View>
-      <View
-        style={{marginRight: 5, flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Icon name="share" size={18} color={colors.dark_gray} />
         <Text style={styles.votes}>0</Text>
       </View>
@@ -37,18 +36,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     backgroundColor: colors.white,
-    width: Dimensions.get('screen').width,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   payout: {
     fontSize: 18,
-    lineHeight: 18,
+    lineHeight: 21,
     color: colors.dark_gray,
   },
   votes: {
     fontSize: 18,
     color: colors.dark_gray,
-    lineHeight: 18,
+    lineHeight: 21,
   },
 });
 

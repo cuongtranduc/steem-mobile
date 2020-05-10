@@ -38,7 +38,6 @@ const PostDetail = ({route, navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1}}>
         <Animated.ScrollView
-          contentContainerStyle={{paddingTop: containerPaddingTop}}
           scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
           onScroll={onScroll}
           style={styles.container}>
@@ -46,13 +45,15 @@ const PostDetail = ({route, navigation}) => {
           {isLoading ? (
             <PostDetailPlaceHolder />
           ) : (
-            post.body && <PostBody html={post.body} />
+            post.body && (
+              <View>
+                <PostBody html={post.body} />
+                <PostFooter item={post} />
+              </View>
+            )
           )}
-          <PostComments comments={comments} />
+          {!isLoading && <PostComments comments={comments} />}
         </Animated.ScrollView>
-        <View style={{position: 'absolute', bottom: 0}}>
-          {!isLoading && <PostFooter item={post} />}
-        </View>
       </View>
     </SafeAreaView>
   );

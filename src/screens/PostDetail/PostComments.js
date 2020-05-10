@@ -1,9 +1,10 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, Text} from 'react-native';
 
-import CommentPlaceHolderList from '../../components/CommentPlaceHolderList';
 import PostHeader from '../../components/PostHeader';
 import PostFooter from '../../components/PostFooter';
+
+import {colors} from '../../utils/theme';
 
 const Comment = ({comment}) => {
   return (
@@ -36,10 +37,18 @@ const PostComments = ({comments}) => {
     <View
       style={{
         flex: 1,
-        marginVertical: 10,
       }}>
+      <View
+        style={{
+          backgroundColor: '#F7F7F7',
+          padding: 10,
+          marginHorizontal: -15,
+        }}>
+        <Text style={{fontSize: 18, color: colors.dark_gray}}>
+          All Comments
+        </Text>
+      </View>
       <FlatList
-        ListEmptyComponent={CommentPlaceHolderList}
         data={comments}
         renderItem={_renderItem}
         keyExtractor={(item) => item.id.toString()}
