@@ -39,7 +39,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: colors.exexlight_gray,
     paddingHorizontal: 15,
   },
   box: {

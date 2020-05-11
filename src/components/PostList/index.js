@@ -6,6 +6,7 @@ import {View, FlatList, StyleSheet} from 'react-native';
 import Post from './Post';
 import PostPlaceHolderList from '../PostPlaceHolderList';
 import {getPosts} from '../../redux/postReducer/operations';
+import {colors} from '../../utils/theme';
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const PostList = () => {
 const styles = StyleSheet.create({
   itemSeperator: {
     height: 5,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: colors.exexlight_gray,
   },
 });
 

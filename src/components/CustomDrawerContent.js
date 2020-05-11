@@ -3,9 +3,11 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Avatar from '../components/Avatar';
 import {actions as StorageActions} from '../redux/storageReducer';
+import {colors} from '../utils/theme';
 
 const CustomDrawerContent = ({navigation}) => {
   const dispatch = useDispatch();
@@ -39,16 +41,20 @@ const CustomDrawerContent = ({navigation}) => {
             justifyContent: 'space-around',
             paddingVertical: 30,
           }}>
-          <TouchableOpacity>
-            <Text style={styles.item}>Home</Text>
+          <TouchableOpacity style={styles.row}>
+            <Icon name="home" color={colors.black} size={25} />
+            <Text style={[styles.item, {color: colors.black}]}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.row}>
+            <Icon name="star" color={colors.dark_gray} size={25} />
             <Text style={styles.item}>Reading List</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.row}>
+            <Icon name="wallet" color={colors.dark_gray} size={25} />
             <Text style={styles.item}>Wallet</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.row}>
+            <Icon name="pencil" color={colors.dark_gray} size={25} />
             <Text style={styles.item}>New Post</Text>
           </TouchableOpacity>
         </View>
@@ -95,11 +101,16 @@ const styles = EStyleSheet.create({
   },
   contentContainer: {
     flex: 7,
-    backgroundColor: '#F7F7F7',
+    backgroundColor: colors.exexlight_gray,
+  },
+  row: {
+    flexDirection: 'row',
+    paddingHorizontal: 30,
   },
   item: {
     fontSize: 20,
-    paddingHorizontal: 30,
+    lineHeight: 26,
+    marginLeft: 30,
     color: '#666',
   },
 });

@@ -10,6 +10,7 @@ import PostHeader from './PostHeader';
 import PostBody from './PostBody';
 import PostFooter from './PostFooter';
 import PostComments from './PostComments';
+import PostMenu from './PostMenu';
 
 import client from '../../providers/dsteem';
 
@@ -54,6 +55,7 @@ const PostDetail = ({route, navigation}) => {
           )}
           {!isLoading && <PostComments comments={comments} />}
         </Animated.ScrollView>
+        <PostMenu />
       </View>
     </SafeAreaView>
   );

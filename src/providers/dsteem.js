@@ -37,6 +37,22 @@ export function getUserComments(query) {
   });
 }
 
+export function submitVote(author, permlink) {
+  const vote = {
+    author,
+    permlink,
+    voter: 1,
+    weight: 5000,
+  };
+
+  client.broadcast.vote(vote, privateKey).then(
+    function (result) {
+      console.log('success:', result);
+    },
+    function (error) {},
+  );
+}
+
 export async function getUser(user) {
   try {
     const [account, follows] = await Promise.all([

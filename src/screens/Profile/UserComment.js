@@ -137,12 +137,12 @@ const UserComment = ({author}) => {
   }, [comments]);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#EEE'}}>
+    <View style={{flex: 1, backgroundColor: colors.exexlight_gray}}>
       <FlatList
         contentContainerStyle={{
           paddingVertical: 5,
           paddingHorizontal: 15,
-          backgroundColor: '#EEE',
+          backgroundColor: colors.exexlight_gray,
         }}
         ListEmptyComponent={CommentPlaceHolderList}
         data={comments}
@@ -164,7 +164,7 @@ const UserComment = ({author}) => {
 const styles = StyleSheet.create({
   itemSeperator: {
     height: 5,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: colors.exexlight_gray,
   },
 });
 

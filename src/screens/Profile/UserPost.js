@@ -82,12 +82,12 @@ const UserPost = ({author}) => {
   }, [author, posts]);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#EEE'}}>
+    <View style={{flex: 1, backgroundColor: colors.exexlight_gray}}>
       <FlatList
         contentContainerStyle={{
           paddingVertical: 5,
           paddingHorizontal: 15,
-          backgroundColor: '#EEE',
+          backgroundColor: colors.exexlight_gray,
         }}
         ListEmptyComponent={PostPlaceHolderList}
         data={posts}
@@ -109,7 +109,7 @@ const UserPost = ({author}) => {
 const styles = StyleSheet.create({
   itemSeperator: {
     height: 5,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: colors.exexlight_gray,
   },
 });
 
