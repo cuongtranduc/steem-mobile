@@ -13,7 +13,7 @@ import HomeScreen from './screens/Home';
 import PostDetailScreen from './screens/PostDetail';
 import ProfileScreen from './screens/Profile';
 import LoginScreen from './screens/Login';
-
+import ReadingListScreen from './screens/ReadingList';
 import WalletScreen from './screens/Wallet';
 import AccountScreen from './screens/Account';
 
@@ -79,20 +79,57 @@ const HomeStack = ({navigation}) => {
               </TouchableOpacity>
             );
           },
-          // headerRight: () => (
-          //   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          //     <Icon
-          //       name="bell"
-          //       size={iconSize}
-          //       color={'#333'}
-          //       style={{marginRight: 15}}
-          //     />
-          //     {/* <Icon style={{marginRight: 15, marginLeft: 25}} name="magnify" size={25} color="#666" /> */}
-          //   </View>
-          // ),
         }}
         name="Home"
         component={HomeScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ReadingListStack = ({navigation}) => {
+  const {account} = useSelector((state) => state.storageReducer);
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{
+          title: 'Reading List',
+          headerStyle,
+          headerTintColor: '#333',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return isEmpty(account) ? (
+              <TouchableOpacity onPress={() => navigate('Login')}>
+                <Icon
+                  style={{marginLeft: 15}}
+                  name="account-circle"
+                  size={iconSize}
+                  color={colors.white}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Avatar
+                  style={{
+                    marginLeft: 15,
+                    height: iconSize + 1,
+                    width: iconSize + 1,
+                    borderRadius: (iconSize + 1) / 2,
+                    borderWidth: 1,
+                    borderColor: '#FFF',
+                  }}
+                  uri={account.avatar}
+                />
+              </TouchableOpacity>
+            );
+          },
+        }}
+        name="ReadingList"
+        component={ReadingListScreen}
       />
     </Stack.Navigator>
   );
@@ -128,10 +165,6 @@ const BottomStack = ({navigation}) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 bottom: iconSize / 4,
-                // borderColor: colors.light_gray,
-                // borderWidth: 5,
-                // borderRightColor: colors.light_gray,
-                // borderRightWidth: 5,
                 borderColor: colors.white,
                 borderWidth: 5,
                 backgroundColor: colors.primary,
@@ -173,8 +206,8 @@ const MainStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="BottomStack"
-        component={BottomStack}
+        name="HomeStack"
+        component={HomeStack}
         options={{
           headerShown: false,
         }}
@@ -207,15 +240,46 @@ const MainStack = () => {
   );
 };
 
+// Gets the current screen from navigation state
+const getActiveRouteName = (state) => {
+  const route = state.routes[state.index];
+
+  if (route.state) {
+    // Dive into nested navigators
+    return getActiveRouteName(route.state);
+  }
+
+  return route.name;
+};
+
 const RootNavigator = () => {
+  const routeNameRef = React.useRef();
+
+  React.useEffect(() => {
+    const state = navigationRef.current.getRootState();
+
+    // Save the initial route name
+    routeNameRef.current = getActiveRouteName(state);
+  }, []);
+
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer
+      ref={navigationRef}
+      onStateChange={(state) => {
+        const currentRouteName = getActiveRouteName(state);
+        routeNameRef.current = currentRouteName;
+      }}>
       <Drawer.Navigator
         drawerStyle={{width: '75%'}}
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        drawerContent={(props) => (
+          <CustomDrawerContent
+            {...props}
+            currentRouteName={routeNameRef.current}
+          />
+        )}
         initialRouteName="MainStack">
         <Drawer.Screen name="MainStack" component={MainStack} />
-        {/* <Drawer.Screen name="Login" component={LoginStack} /> */}
+        <Drawer.Screen name="ReadingList" component={ReadingListStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -227,6 +291,10 @@ export function navigate(name, params) {
 
 export function goBack() {
   navigationRef.current?.goBack();
+}
+
+export function getRootState() {
+  return navigationRef.current?.getRootState();
 }
 
 export default RootNavigator;

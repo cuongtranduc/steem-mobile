@@ -33,7 +33,6 @@ const PostList = () => {
 
   return (
     <FlatList
-      style={{paddingVertical: 5}}
       ListEmptyComponent={PostPlaceHolderList}
       data={posts}
       renderItem={_renderItem}

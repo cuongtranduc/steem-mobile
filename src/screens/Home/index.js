@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 
@@ -10,8 +10,9 @@ import {colors} from '../../utils/theme';
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      {/* <View
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
+      <View style={styles.container}>
+        {/* <View
         style={{
           height: 80,
           flexDirection: 'row',
@@ -31,8 +32,9 @@ const Home = () => {
           <Icon name="menu-down" size={24} />
         </View>
       </View> */}
-      <PostList />
-    </View>
+        <PostList />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.exexlight_gray,
     paddingHorizontal: 15,
+    paddingVertical: 5,
   },
   box: {
     paddingHorizontal: 10,

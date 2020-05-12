@@ -1,19 +1,18 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useCallback, useMemo} from 'react';
+import {View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Avatar from '../components/Avatar';
 import {actions as StorageActions} from '../redux/storageReducer';
 import {colors} from '../utils/theme';
 
-const CustomDrawerContent = ({navigation}) => {
+const CustomDrawerContent = ({navigation, currentRouteName}) => {
   const dispatch = useDispatch();
   const {account} = useSelector((state) => state.storageReducer);
 
-  const navigateToProfile = () => {
+  const _navigateToProfile = () => {
     navigation.navigate('Profile', {author: account.name});
   };
 
@@ -22,12 +21,27 @@ const CustomDrawerContent = ({navigation}) => {
     navigation.closeDrawer();
   };
 
+  const _navigateToHome = useCallback(() => {
+    navigation.navigate('Home');
+  }, [navigation]);
+
+  const _navigateToReadlingList = useCallback(() => {
+    navigation.navigate('ReadingList', {author: account.name});
+  }, [account.name, navigation]);
+
+  const isCurrentScreen = useCallback(
+    (screenName) => {
+      return currentRouteName === screenName;
+    },
+    [currentRouteName],
+  );
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.avatarContainer}>
         <Avatar style={styles.avatar} uri={account.avatar} />
         <Text style={styles.name}>{account.name}</Text>
-        <TouchableOpacity onPress={navigateToProfile}>
+        <TouchableOpacity onPress={_navigateToProfile}>
           <Text style={styles.viewProfile}>View profile</Text>
         </TouchableOpacity>
       </View>
@@ -41,14 +55,30 @@ const CustomDrawerContent = ({navigation}) => {
             justifyContent: 'space-around',
             paddingVertical: 30,
           }}>
-          <TouchableOpacity style={styles.row}>
-            <Icon name="home" color={colors.black} size={25} />
-            <Text style={[styles.item, {color: colors.black}]}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.row}>
-            <Icon name="star" color={colors.dark_gray} size={25} />
-            <Text style={styles.item}>Reading List</Text>
-          </TouchableOpacity>
+          {useMemo(() => {
+            const color = isCurrentScreen('Home') ? colors.black : '#666';
+            return (
+              <TouchableOpacity onPress={_navigateToHome} style={styles.row}>
+                <Icon name="home" color={color} size={25} />
+                <Text style={[styles.item, {color}]}>Home</Text>
+              </TouchableOpacity>
+            );
+          }, [_navigateToHome, isCurrentScreen])}
+
+          {useMemo(() => {
+            const color = isCurrentScreen('ReadingList')
+              ? colors.black
+              : '#666';
+            return (
+              <TouchableOpacity
+                onPress={_navigateToReadlingList}
+                style={styles.row}>
+                <Icon name="star" color={color} size={25} />
+                <Text style={[styles.item, {color}]}>Reading List</Text>
+              </TouchableOpacity>
+            );
+          }, [_navigateToReadlingList, isCurrentScreen])}
+
           <TouchableOpacity style={styles.row}>
             <Icon name="wallet" color={colors.dark_gray} size={25} />
             <Text style={styles.item}>Wallet</Text>
@@ -58,34 +88,49 @@ const CustomDrawerContent = ({navigation}) => {
             <Text style={styles.item}>New Post</Text>
           </TouchableOpacity>
         </View>
-        <View style={{flex: 1}} />
+        {/* <View style={{flex: 1}} /> */}
         <View
           style={{
             flex: 3,
+            marginHorizontal: 5,
+            paddingVertical: 30,
           }}>
-          <View style={{flex: 1}} />
-          <TouchableOpacity
-            onPress={_logout}
-            style={{alignSelf: 'center', marginBottom: 44}}>
-            <Text style={[styles.item, {color: '#000'}]}>Sign out</Text>
+          <View style={{flex: 1}}>
+            <TouchableOpacity onPress={_logout} style={styles.row}>
+              <Icon name="logout" color={colors.dark_gray} size={25} />
+              <Text style={[styles.item]}>Sign out</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={_logout}
+              style={styles.row}></TouchableOpacity>
+            <TouchableOpacity
+              onPress={_logout}
+              style={styles.row}></TouchableOpacity>
+            <TouchableOpacity
+              onPress={_logout}
+              style={styles.row}></TouchableOpacity>
+          </View>
+          <TouchableOpacity style={{alignSelf: 'center'}}>
+            <Text style={[styles.item, {color: '#000'}]}>Settings</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.exexlight_gray,
   },
   avatarContainer: {
     flex: 3,
-    padding: 30,
-    justifyContent: 'space-around',
+    paddingLeft: 30,
+    justifyContent: 'space-evenly',
+    backgroundColor: colors.white,
   },
   avatar: {
-    marginTop: getStatusBarHeight() - 10,
     width: 100,
     height: 100,
     borderRadius: 50,
