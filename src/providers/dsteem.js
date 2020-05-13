@@ -11,6 +11,7 @@ import {
   getReputation,
   getWebsite,
 } from '../utils/user';
+import {encryptKey} from '../utils/crypto';
 
 const client = new Client('https://api.steemit.com');
 
@@ -132,93 +133,154 @@ export async function getUser(user) {
 }
 
 export async function login(username, password, keyrole) {
-  let loginFlag = false;
-  let avatar = '';
-  let authType = '';
-
-  // Get user account data from STEEM Blockchain
-  const account = await getUser(username);
-
-  if (!account) {
-    return Promise.reject(new Error('auth.invalid_username'));
-  }
-
-  // Public keys of user
-  const publicKeys = {
-    activeKey: get(account, 'active.key_auths', []).map((x) => x[0])[0],
-    memoKey: get(account, 'memo_key', ''),
-    ownerKey: get(account, 'owner.key_auths', []).map((x) => x[0])[0],
-    postingKey: get(account, 'posting.key_auths', []).map((x) => x[0])[0],
-  };
-
-  // Set private keys of user
-  const privateKeys = getPrivateKeys(username, password);
-
-  // Check all keys
-  Object.keys(publicKeys).map((pubKey) => {
-    if (publicKeys[pubKey] === privateKeys[pubKey].createPublic().toString()) {
-      loginFlag = true;
-      if (privateKeys.isMasterKey) {
-        authType = AUTH_TYPE.MASTER_KEY;
-      } else {
-        authType = pubKey;
-      }
-    }
-  });
-
-  let jsonMetadata;
   try {
-    jsonMetadata =
-      JSON.parse(account.posting_json_metadata) ||
-      JSON.parse(account.json_metadata) ||
-      '';
+    let loginFlag = false;
+    let avatar = '';
+    let authType = '';
+
+    // Get user account data from STEEM Blockchain
+    const account = await getUser(username);
+
+    if (!account) {
+      return Promise.reject(new Error('auth.invalid_username'));
+    }
+
+    // Public keys of user
+    const publicKeys = {
+      activeKey: get(account, 'active.key_auths', []).map((x) => x[0])[0],
+      memoKey: get(account, 'memo_key', ''),
+      ownerKey: get(account, 'owner.key_auths', []).map((x) => x[0])[0],
+      postingKey: get(account, 'posting.key_auths', []).map((x) => x[0])[0],
+    };
+
+    // Set private keys of user
+    const privateKeys = getPrivateKeys(username, password);
+
+    // Check all keys
+    Object.keys(publicKeys).map((pubKey) => {
+      if (
+        publicKeys[pubKey] === privateKeys[pubKey].createPublic().toString()
+      ) {
+        loginFlag = true;
+        if (privateKeys.isMasterKey) {
+          authType = AUTH_TYPE.MASTER_KEY;
+        } else {
+          authType = pubKey;
+        }
+      }
+    });
+
+    let jsonMetadata;
+    try {
+      jsonMetadata =
+        JSON.parse(account.posting_json_metadata) ||
+        JSON.parse(account.json_metadata) ||
+        '';
+    } catch (err) {
+      jsonMetadata = '';
+    }
+    if (Object.keys(jsonMetadata).length !== 0) {
+      avatar = jsonMetadata.profile.profile_image || '';
+    }
+    if (loginFlag) {
+      const userData = {
+        username,
+        avatar,
+        authType,
+        masterKey: '',
+        postingKey: '',
+        activeKey: '',
+        memoKey: '',
+        accessToken: '',
+      };
+
+      // if (isPinCodeOpen) {
+      //   account.local = userData;
+      // } else {
+      //   const resData = {
+      //     pinCode: Config.DEFAULT_PIN,
+      //     password,
+      //   };
+      const resData = {
+        pinCode: '1111',
+        password,
+      };
+      const updatedUserData = await getUpdatedUserData(userData, resData);
+
+      //   account.local = updatedUserData;
+      //   account.local.avatar = avatar;
+      // }
+
+      // const authData = {
+      //   isLoggedIn: true,
+      //   currentUsername: username,
+      // };
+      // await setAuthStatus(authData);
+
+      // // Save user data to Realm DB
+      // await setUserData(account.local);
+      // await updateCurrentUsername(account.name);
+      return {
+        ...updatedUserData,
+        ...account,
+        password,
+      };
+    }
+    return Promise.reject(new Error('auth.invalid_credentials'));
   } catch (err) {
-    jsonMetadata = '';
+    console.log('err', err);
+    return Promise.reject(new Error('auth.invalid_credentials'));
   }
-  if (Object.keys(jsonMetadata).length !== 0) {
-    avatar = jsonMetadata.profile.profile_image || '';
-  }
-  if (loginFlag) {
-    const userData = {
-      username,
-      avatar,
-      authType,
-      masterKey: '',
-      postingKey: '',
-      activeKey: '',
-      memoKey: '',
-      accessToken: '',
-    };
-
-    // if (isPinCodeOpen) {
-    //   account.local = userData;
-    // } else {
-    //   const resData = {
-    //     pinCode: Config.DEFAULT_PIN,
-    //     password,
-    //   };
-    //   const updatedUserData = await getUpdatedUserData(userData, resData);
-
-    //   account.local = updatedUserData;
-    //   account.local.avatar = avatar;
-    // }
-
-    // const authData = {
-    //   isLoggedIn: true,
-    //   currentUsername: username,
-    // };
-    // await setAuthStatus(authData);
-
-    // // Save user data to Realm DB
-    // await setUserData(account.local);
-    // await updateCurrentUsername(account.name);
-    return {
-      ...account,
-      password,
-    };
-  }
-  return Promise.reject(new Error('auth.invalid_credentials'));
 }
+
+export const getUpdatedUserData = (userData, data) => {
+  try {
+    const privateKeys = getPrivateKeys(
+      get(userData, 'username', ''),
+      get(data, 'password'),
+    );
+
+    return {
+      username: get(userData, 'username', ''),
+      authType: get(userData, 'authType', ''),
+      accessToken:
+        get(userData, 'authType', '') === AUTH_TYPE.STEEM_CONNECT
+          ? encryptKey(data.accessToken, get(data, 'pinCode'))
+          : '',
+      masterKey:
+        get(userData, 'authType', '') === AUTH_TYPE.MASTER_KEY
+          ? encryptKey(data.password, get(data, 'pinCode'))
+          : '',
+      postingKey:
+        get(userData, 'authType', '') === AUTH_TYPE.MASTER_KEY ||
+        get(userData, 'authType', '') === AUTH_TYPE.POSTING_KEY
+          ? encryptKey(
+              get(privateKeys, 'postingKey', '').toString(),
+              get(data, 'pinCode'),
+            )
+          : '',
+      activeKey:
+        get(userData, 'authType', '') === AUTH_TYPE.MASTER_KEY ||
+        get(userData, 'authType', '') === AUTH_TYPE.ACTIVE_KEY
+          ? encryptKey(
+              get(privateKeys, 'activeKey', '').toString(),
+              get(data, 'pinCode'),
+            )
+          : '',
+      memoKey:
+        get(userData, 'authType', '') === AUTH_TYPE.MASTER_KEY ||
+        get(userData, 'authType', '') === AUTH_TYPE.MEMO_KEY
+          ? encryptKey(
+              get(privateKeys, 'memoKey', '').toString(),
+              get(data, 'pinCode'),
+            )
+          : '',
+    };
+  } catch (err) {
+    console.log(err);
+    return {};
+  }
+};
 
 const getPrivateKeys = (username, password) => {
   try {

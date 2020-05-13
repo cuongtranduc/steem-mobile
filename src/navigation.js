@@ -37,7 +37,7 @@ const headerStyle = {
     height: 1,
     width: 0,
   },
-  evaluation: 5,
+  elevation: 5,
 };
 
 const HomeStack = ({navigation}) => {
@@ -55,12 +55,12 @@ const HomeStack = ({navigation}) => {
           },
           headerLeft: () => {
             return isEmpty(account) ? (
-              <TouchableOpacity onPress={() => navigate('Login')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Icon
                   style={{marginLeft: 15}}
                   name="account-circle"
                   size={iconSize}
-                  color={colors.white}
+                  color={'#333'}
                 />
               </TouchableOpacity>
             ) : (
