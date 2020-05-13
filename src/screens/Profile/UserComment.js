@@ -52,7 +52,7 @@ const Comment = ({comment}) => {
         </Text>
         <Text style={{marginTop: 10, fontSize: 16}}>{comment.body}</Text>
       </TouchableOpacity>
-      <PostFooter item={comment} hideShare />
+      <PostFooter item={comment} hideShare showReply />
     </View>
   );
 };

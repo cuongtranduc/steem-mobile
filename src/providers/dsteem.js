@@ -38,6 +38,19 @@ export function getUserComments(query) {
   });
 }
 
+export const getActiveVotes = (author, permlink) => {
+  return new Promise((resolve, reject) => {
+    client.database
+      .call('get_active_votes', [author, permlink])
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 export function submitVote(author, permlink) {
   const vote = {
     author,

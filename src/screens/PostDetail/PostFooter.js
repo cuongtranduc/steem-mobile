@@ -16,11 +16,11 @@ const PostFooter = ({item}) => {
         <Text style={styles.votes}>{item.active_votes.length}</Text>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="comment-multiple-outline" size={18} color={'#06D6A9'} />
+        <Icon name="comment-multiple" size={18} color={colors.dark_gray} />
         <Text style={styles.votes}>{item.children}</Text>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="share" size={18} color={colors.primary} />
+        <Icon name="share" size={18} color={colors.dark_gray} />
         <Text style={styles.votes}>0</Text>
       </View>
     </View>
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     lineHeight: 21,
   },
   votes: {
+    marginLeft: 3,
     fontSize: 18,
     lineHeight: 21,
   },

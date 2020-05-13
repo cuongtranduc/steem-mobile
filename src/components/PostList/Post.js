@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useCallback, useState} from 'react';
 import {
   View,
   Text,
@@ -14,10 +14,21 @@ import PostFooter from '../PostFooter';
 
 import {colors} from '../../utils/theme';
 import * as Navigation from '../../navigation';
+import {getActiveVotes} from '../../providers/dsteem';
 
 const screenHeight = Dimensions.get('window').height;
 
 const Post = ({item}) => {
+  const [activeVotes, setActiveVotes] = useState([]);
+  useEffect(() => {
+    _getActiveVotes();
+  }, [_getActiveVotes]);
+
+  const _getActiveVotes = useCallback(async () => {
+    const _activeVotes = await getActiveVotes(item.author, item.permlink);
+    setActiveVotes(_activeVotes);
+  }, [item.author, item.permlink]);
+
   const metaData = JSON.parse(item.json_metadata);
 
   const navigateToDetail = () => {
@@ -46,7 +57,7 @@ const Post = ({item}) => {
           />
         </TouchableOpacity>
       )}
-      <PostFooter item={item} />
+      <PostFooter activeVotes={activeVotes} item={item} />
     </View>
   );
 };
