@@ -220,6 +220,7 @@ const MainStack = () => {
           title: '',
           headerBackTitle: 'Home',
           headerStyle,
+          headerTintColor: colors.black,
         }}
       />
       <Stack.Screen
@@ -235,6 +236,7 @@ const MainStack = () => {
           title: `Voters (${route.params.voters.length})`,
           headerStyle,
           headerBackTitle: '',
+          headerTintColor: colors.black,
         })}
         component={VotersScreen}
       />

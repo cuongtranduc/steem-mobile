@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, SafeAreaView} from 'react-native';
 import VoterList from '../../components/VoterList';
 
 import {colors} from '../../utils/theme';
@@ -13,9 +13,9 @@ const Voters = ({navigation, route}) => {
   }, [route.params.voters]);
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       {voters.length > 0 && <VoterList voters={voters} />}
-    </View>
+    </SafeAreaView>
   );
 };
 

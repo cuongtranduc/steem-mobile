@@ -19,7 +19,7 @@ const Voter = ({voter}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={navigateToProfile}>
         <Avatar style={styles.avatar} author={voter.voter} />
       </TouchableOpacity>
@@ -33,7 +33,7 @@ const Voter = ({voter}) => {
       </View>
       <View style={{flex: 1}} />
       {/* {!hideOption && <PostMenu item={item} />} */}
-    </SafeAreaView>
+    </View>
   );
 };
 

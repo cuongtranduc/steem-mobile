@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, View, ActivityIndicator} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import Voter from './Voter';
 
 import {colors} from '../../utils/theme';
@@ -10,23 +10,9 @@ const VoterList = ({voters}) => {
   const [activeVotes, setActiveVotes] = useState(
     votersRef.current.splice(0, 20),
   );
-  const [isLoading, setIsLoading] = useState(false);
 
   const _renderItem = ({item, index}) => {
-    return (
-      <>
-        <Voter voter={item} />
-        {index === activeVotes.length - 1 && isLoading && (
-          <View style={{marginVertical: 10}}>
-            <ActivityIndicator
-              size="large"
-              animating={true}
-              color={colors.primary}
-            />
-          </View>
-        )}
-      </>
-    );
+    return <Voter voter={item} />;
   };
 
   const _onEndReached = useCallback(async () => {
@@ -39,9 +25,7 @@ const VoterList = ({voters}) => {
         setActiveVotes(activeVotes.concat(_newActiveVoters));
         onEndReachedCalledDuringMomentum.current = true;
       }
-    } finally {
-      setIsLoading(false);
-    }
+    } catch (err) {}
   }, [activeVotes, setActiveVotes]);
 
   return (
@@ -52,9 +36,9 @@ const VoterList = ({voters}) => {
           paddingHorizontal: 15,
           backgroundColor: colors.exexlight_gray,
         }}
-        data={activeVotes}
+        data={voters}
         renderItem={_renderItem}
-        keyExtractor={(item) => item.voter + item.time}
+        keyExtractor={(item) => item.voter}
         ItemSeparatorComponent={() => <View />}
         onEndReached={_onEndReached}
         onEndReachedThreshold={0.5}
