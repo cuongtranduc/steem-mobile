@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {Text} from 'react-native';
+import {Text, Platform, StatusBar} from 'react-native';
 import {MenuProvider} from 'react-native-popup-menu';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-
+import SplashScreen from 'react-native-splash-screen';
 import RootNavigator from './navigation';
 import {store, persistor} from './redux';
 import theme from './utils/theme';
@@ -20,16 +20,20 @@ const App = () => {
       });
     };
     EStyleSheet.build(theme);
+    SplashScreen.hide();
   }, []);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <MenuProvider>
-          <RootNavigator />
-        </MenuProvider>
-      </PersistGate>
-    </Provider>
+    <>
+      {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <MenuProvider>
+            <RootNavigator />
+          </MenuProvider>
+        </PersistGate>
+      </Provider>
+    </>
   );
 };
 
