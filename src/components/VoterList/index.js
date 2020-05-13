@@ -6,7 +6,7 @@ import {colors} from '../../utils/theme';
 
 const VoterList = ({voters}) => {
   const onEndReachedCalledDuringMomentum = React.useRef(true);
-  const votersRef = React.useRef(voters);
+  const votersRef = React.useRef([...voters]);
   const [activeVotes, setActiveVotes] = useState(
     votersRef.current.splice(0, 20),
   );
