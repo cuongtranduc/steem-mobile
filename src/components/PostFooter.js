@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {sbdToDollar} from '../utils/money';
 import {colors} from '../utils/theme';
+import {navigate} from '../navigation';
 
 const PostFooter = ({item, hideShare, showReply, activeVotes = []}) => {
   const {username} = useSelector((state) => state.storageReducer.account);
@@ -16,6 +17,10 @@ const PostFooter = ({item, hideShare, showReply, activeVotes = []}) => {
       setIsVoted(_isVoted);
     }
   }, [activeVotes, username]);
+
+  const _navigateToVoters = () => {
+    navigate('Voters', {voters: activeVotes});
+  };
 
   return (
     <View style={styles.footer}>
@@ -29,7 +34,9 @@ const PostFooter = ({item, hideShare, showReply, activeVotes = []}) => {
           size={18}
           color={isVoted ? '#f77' : colors.dark_gray}
         />
-        <Text style={styles.votes}>{item.active_votes.length}</Text>
+        <TouchableOpacity onPress={_navigateToVoters}>
+          <Text style={styles.votes}>{item.active_votes.length}</Text>
+        </TouchableOpacity>
       </View>
       <View
         style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>

@@ -16,6 +16,7 @@ import LoginScreen from './screens/Login';
 import ReadingListScreen from './screens/ReadingList';
 import WalletScreen from './screens/Wallet';
 import AccountScreen from './screens/Account';
+import VotersScreen from './screens/Voters';
 
 import CustomDrawerContent from './components/CustomDrawerContent';
 import Avatar from './components/Avatar';
@@ -227,6 +228,15 @@ const MainStack = () => {
           headerShown: false,
         }}
         component={ProfileScreen}
+      />
+      <Stack.Screen
+        name="Voters"
+        options={({route}) => ({
+          title: `Voters (${route.params.voters.length})`,
+          headerStyle,
+          headerBackTitle: '',
+        })}
+        component={VotersScreen}
       />
       <Stack.Screen
         name="Login"
