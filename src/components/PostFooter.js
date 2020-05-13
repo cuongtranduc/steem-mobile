@@ -22,6 +22,14 @@ const PostFooter = ({item, hideShare, showReply, activeVotes = []}) => {
     navigate('Voters', {voters: activeVotes});
   };
 
+  const _navigateToPostDetail = () => {
+    navigate('PostDetail', {
+      data: [item.author, item.permlink],
+      post: item,
+      isVoted,
+    });
+  };
+
   return (
     <View style={styles.footer}>
       <Text style={styles.payout}>
@@ -38,7 +46,8 @@ const PostFooter = ({item, hideShare, showReply, activeVotes = []}) => {
           <Text style={styles.votes}>{item.active_votes.length}</Text>
         </TouchableOpacity>
       </View>
-      <View
+      <TouchableOpacity
+        onPress={_navigateToPostDetail}
         style={{marginLeft: 15, flexDirection: 'row', alignItems: 'center'}}>
         <Icon
           name={showReply ? 'message-reply-text' : 'comment-multiple'}
@@ -46,7 +55,7 @@ const PostFooter = ({item, hideShare, showReply, activeVotes = []}) => {
           color={colors.dark_gray}
         />
         <Text style={styles.votes}>{item.children}</Text>
-      </View>
+      </TouchableOpacity>
       <View style={{flex: 1}} />
       {!hideShare && (
         <View

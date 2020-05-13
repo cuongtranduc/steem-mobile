@@ -11,9 +11,14 @@ import {submitVote} from '../../providers/dsteem';
 
 import {colors} from '../../utils/theme';
 
-const PostMenu = ({item}) => {
-  const _submitVote = () => {
-    submitVote(item.author, item.permlink);
+const PostMenu = ({post, isVoted}) => {
+  const _submitVote = async () => {
+    try {
+      const result = await submitVote(post.author, post.permlink);
+      console.log('result', result);
+    } catch (err) {
+      console.log('error', err);
+    }
   };
 
   return (
@@ -21,7 +26,11 @@ const PostMenu = ({item}) => {
       <TouchableOpacity
         onPress={_submitVote}
         style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="heart" size={21} color={colors.dark_gray} />
+        <Icon
+          name="heart"
+          size={21}
+          color={isVoted ? '#f77' : colors.dark_gray}
+        />
       </TouchableOpacity>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Icon name="message-reply-text" size={21} color={colors.dark_gray} />

@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 
 import PostHeder from '../PostHeader';
@@ -19,6 +20,7 @@ import {getActiveVotes} from '../../providers/dsteem';
 const screenHeight = Dimensions.get('window').height;
 
 const Post = ({item}) => {
+  const {username} = useSelector((state) => state.storageReducer.account);
   const [activeVotes, setActiveVotes] = useState([]);
   useEffect(() => {
     _getActiveVotes();
@@ -35,6 +37,7 @@ const Post = ({item}) => {
     Navigation.navigate('PostDetail', {
       data: [item.author, item.permlink],
       post: item,
+      isVoted: activeVotes.some((vote) => vote.voter === username),
     });
   };
 

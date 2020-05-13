@@ -9,7 +9,6 @@ const Voters = ({navigation, route}) => {
 
   useEffect(() => {
     setVoters(route.params.voters);
-    console.log(route.params.voters);
   }, [route.params.voters]);
 
   return (

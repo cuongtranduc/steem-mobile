@@ -11,7 +11,8 @@ import {
   getReputation,
   getWebsite,
 } from '../utils/user';
-import {encryptKey} from '../utils/crypto';
+import {encryptKey, decryptKey} from '../utils/crypto';
+import {store} from '../redux';
 
 const client = new Client('https://api.steemit.com');
 
@@ -52,19 +53,24 @@ export const getActiveVotes = (author, permlink) => {
 };
 
 export function submitVote(author, permlink) {
+  const {account} = store.getState().storageReducer;
   const vote = {
     author,
     permlink,
-    voter: 1,
-    weight: 5000,
+    voter: account.username,
+    weight: 100,
   };
 
-  client.broadcast.vote(vote, privateKey).then(
-    function (result) {
-      console.log('success:', result);
-    },
-    function (error) {},
-  );
+  return new Promise((resolve, reject) => {
+    client.broadcast
+      .vote(vote, PrivateKey.fromString(account.postingKey))
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 }
 
 export async function getUser(user) {

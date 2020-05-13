@@ -30,7 +30,6 @@ const PostDetail = ({route, navigation}) => {
       setIsLoading(false);
     });
     client.database.call('get_content_replies', data).then((result) => {
-      console.log(result);
       setComments(result);
     });
   }, [route.params]);
@@ -55,7 +54,7 @@ const PostDetail = ({route, navigation}) => {
           )}
           {!isLoading && <PostComments comments={comments} />}
         </Animated.ScrollView>
-        <PostMenu />
+        <PostMenu post={post} isVoted={route.params.isVoted} />
       </View>
     </SafeAreaView>
   );
