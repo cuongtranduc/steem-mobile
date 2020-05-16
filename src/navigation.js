@@ -17,6 +17,7 @@ import ReadingListScreen from './screens/ReadingList';
 import WalletScreen from './screens/Wallet';
 import AccountScreen from './screens/Account';
 import VotersScreen from './screens/Voters';
+import PublishScreen from './screens/Publish';
 
 import CustomDrawerContent from './components/CustomDrawerContent';
 import Avatar from './components/Avatar';
@@ -131,6 +132,21 @@ const ReadingListStack = ({navigation}) => {
         }}
         name="ReadingList"
         component={ReadingListScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const PublishStack = ({navigation}) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          ...TransitionPresets.ModalTransition,
+        }}
+        name="Publish"
+        component={PublishScreen}
       />
     </Stack.Navigator>
   );
@@ -292,6 +308,7 @@ const RootNavigator = () => {
         initialRouteName="MainStack">
         <Drawer.Screen name="MainStack" component={MainStack} />
         <Drawer.Screen name="ReadingList" component={ReadingListStack} />
+        <Drawer.Screen name="Publish" component={PublishStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

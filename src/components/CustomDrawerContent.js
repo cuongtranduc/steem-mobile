@@ -29,6 +29,10 @@ const CustomDrawerContent = ({navigation, currentRouteName}) => {
     navigation.navigate('ReadingList', {author: account.name});
   }, [account.name, navigation]);
 
+  const _navigateToPublish = () => {
+    navigation.navigate('Publish');
+  };
+
   const isCurrentScreen = useCallback(
     (screenName) => {
       return currentRouteName === screenName;
@@ -83,7 +87,7 @@ const CustomDrawerContent = ({navigation, currentRouteName}) => {
             <Icon name="wallet" color={colors.dark_gray} size={25} />
             <Text style={styles.item}>Wallet</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.row}>
+          <TouchableOpacity onPress={_navigateToPublish} style={styles.row}>
             <Icon name="pencil" color={colors.dark_gray} size={25} />
             <Text style={styles.item}>New Post</Text>
           </TouchableOpacity>

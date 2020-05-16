@@ -1,7 +1,7 @@
 import {Dimensions, Platform, StatusBar} from 'react-native';
 
 export const colors = {
-  primary: '#1DA1F2',
+  primary: '#2095F2',
   secondary: '#14171A',
   dark_gray: '#657786',
   light_gray: '#AAB8C2',
