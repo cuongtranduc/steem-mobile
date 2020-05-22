@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, View, TouchableOpacity} from 'react-native';
+import {Platform, View, Text, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -232,12 +232,23 @@ const MainStack = () => {
       <Stack.Screen
         name="PostDetail"
         component={PostDetailScreen}
-        options={{
-          title: '',
+        options={({route}) => ({
+          // headerTitle: (props) => {
+          //   console.log(props);
+          //   return (
+          //     <View style={{flexDirection: 'row'}}>
+          //       <Text style={{color: '#333', fontSize: 15}}>Published in</Text>
+          //       <Text style={{color: colors.black, fontSize: 15}}>
+          //         {route.params.post.category}
+          //       </Text>
+          //     </View>
+          //   );
+          // },
+          title: `in ${route.params.post.category}`,
           headerBackTitle: 'Home',
           headerStyle,
           headerTintColor: colors.black,
-        }}
+        })}
       />
       <Stack.Screen
         name="Profile"

@@ -5,15 +5,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../utils/theme';
 import {sbdToDollar} from '../../utils/money';
 
-const PostFooter = ({item}) => {
+const PostFooter = ({item, isVoted, activeVotes}) => {
   return (
     <View style={styles.footer}>
       <Text style={styles.payout}>
         {sbdToDollar(item.pending_payout_value)}
       </Text>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="heart" size={18} color={'#f77'} />
-        <Text style={styles.votes}>{item.active_votes.length}</Text>
+        <Icon
+          name="heart"
+          size={18}
+          color={isVoted ? '#f77' : colors.dark_gray}
+        />
+        <Text style={styles.votes}>{activeVotes.length}</Text>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Icon name="comment-multiple" size={18} color={colors.dark_gray} />

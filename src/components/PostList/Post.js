@@ -22,6 +22,7 @@ const screenHeight = Dimensions.get('window').height;
 const Post = ({item}) => {
   const {username} = useSelector((state) => state.storageReducer.account);
   const [activeVotes, setActiveVotes] = useState([]);
+  const [isVoted, setIsVoted] = useState(false);
   useEffect(() => {
     _getActiveVotes();
   }, [_getActiveVotes]);
@@ -29,7 +30,9 @@ const Post = ({item}) => {
   const _getActiveVotes = useCallback(async () => {
     const _activeVotes = await getActiveVotes(item.author, item.permlink);
     setActiveVotes(_activeVotes);
-  }, [item.author, item.permlink]);
+    setIsVoted(_activeVotes.some((vote) => vote.voter === username));
+    return _activeVotes;
+  }, [item.author, item.permlink, username]);
 
   const metaData = JSON.parse(item.json_metadata);
 
@@ -37,7 +40,8 @@ const Post = ({item}) => {
     Navigation.navigate('PostDetail', {
       data: [item.author, item.permlink],
       post: item,
-      isVoted: activeVotes.some((vote) => vote.voter === username),
+      activeVotes,
+      getActiveVotes: _getActiveVotes,
     });
   };
 
@@ -60,7 +64,7 @@ const Post = ({item}) => {
           />
         </TouchableOpacity>
       )}
-      <PostFooter activeVotes={activeVotes} item={item} />
+      <PostFooter activeVotes={activeVotes} isVoted={isVoted} item={item} />
     </View>
   );
 };

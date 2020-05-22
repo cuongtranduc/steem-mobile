@@ -34,7 +34,7 @@ const VoterList = ({voters}) => {
         contentContainerStyle={{
           paddingVertical: 5,
           paddingHorizontal: 15,
-          backgroundColor: colors.exexlight_gray,
+          backgroundColor: colors.white,
         }}
         data={voters}
         renderItem={_renderItem}

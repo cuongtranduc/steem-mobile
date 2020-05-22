@@ -1,10 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
+import {useSelector} from 'react-redux';
 import {StyleSheet, SafeAreaView, Animated, View} from 'react-native';
-import {
-  useCollapsibleStack,
-  CollapsibleStackSub,
-} from 'react-navigation-collapsible';
-
 import PostDetailPlaceHolder from './PostDetailPlaceHolder';
 import PostHeader from './PostHeader';
 import PostBody from './PostBody';
@@ -15,16 +11,15 @@ import PostMenu from './PostMenu';
 import client from '../../providers/dsteem';
 
 const PostDetail = ({route, navigation}) => {
-  const {
-    onScroll,
-    scrollIndicatorInsetTop,
-    containerPaddingTop,
-  } = useCollapsibleStack();
+  const {username} = useSelector((state) => state.storageReducer.account);
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isVoted, setIsVoted] = useState(false);
+
   useEffect(() => {
     const {data} = route.params;
+    checkVoted();
     client.database.call('get_content', data).then((result) => {
       setPost(result);
       setIsLoading(false);
@@ -32,15 +27,21 @@ const PostDetail = ({route, navigation}) => {
     client.database.call('get_content_replies', data).then((result) => {
       setComments(result);
     });
-  }, [route.params]);
+  }, [checkVoted, route.params]);
+
+  const checkVoted = useCallback(
+    (activeVotes) => {
+      const _activeVotes = activeVotes || route.params.activeVotes;
+      const _isVoted = _activeVotes.some((vote) => vote.voter === username);
+      setIsVoted(_isVoted);
+    },
+    [route.params, username],
+  );
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1}}>
-        <Animated.ScrollView
-          scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-          onScroll={onScroll}
-          style={styles.container}>
+        <Animated.ScrollView style={styles.container}>
           <PostHeader post={route.params.post} />
           {isLoading ? (
             <PostDetailPlaceHolder />
@@ -48,13 +49,22 @@ const PostDetail = ({route, navigation}) => {
             post.body && (
               <View>
                 <PostBody html={post.body} />
-                <PostFooter item={post} />
+                <PostFooter
+                  isVoted={isVoted}
+                  item={post}
+                  activeVotes={route.params.activeVotes}
+                />
               </View>
             )
           )}
           {!isLoading && <PostComments comments={comments} />}
         </Animated.ScrollView>
-        <PostMenu post={post} isVoted={route.params.isVoted} />
+        <PostMenu
+          post={post}
+          isVoted={isVoted}
+          checkVoted={checkVoted}
+          getActiveVotes={route.params.getActiveVotes}
+        />
       </View>
     </SafeAreaView>
   );
