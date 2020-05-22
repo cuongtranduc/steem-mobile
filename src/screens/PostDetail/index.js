@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
 import {StyleSheet, SafeAreaView, Animated, View} from 'react-native';
 import PostDetailPlaceHolder from './PostDetailPlaceHolder';
 import PostHeader from './PostHeader';
@@ -18,16 +19,44 @@ const PostDetail = ({route, navigation}) => {
   const [isVoted, setIsVoted] = useState(false);
 
   useEffect(() => {
-    const {data} = route.params;
     checkVoted();
-    client.database.call('get_content', data).then((result) => {
-      setPost(result);
-      setIsLoading(false);
-    });
+    getComments();
+    getPost();
+  }, [checkVoted, getComments, getPost]);
+
+  const addPostToFirebase = useCallback(
+    (_post) => {
+      firestore()
+        .collection('user_reading')
+        .doc(username)
+        .collection('histories')
+        .doc(_post.id.toString())
+        .set(_post)
+        .then(() => {
+          console.log('Post added!');
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    },
+    [username],
+  );
+
+  const getComments = useCallback(() => {
+    const {data} = route.params;
     client.database.call('get_content_replies', data).then((result) => {
       setComments(result);
     });
-  }, [checkVoted, route.params]);
+  }, [route.params]);
+
+  const getPost = useCallback(() => {
+    const {data} = route.params;
+    client.database.call('get_content', data).then((result) => {
+      setPost(result);
+      addPostToFirebase(result);
+      setIsLoading(false);
+    });
+  }, [addPostToFirebase, route.params]);
 
   const checkVoted = useCallback(
     (activeVotes) => {
