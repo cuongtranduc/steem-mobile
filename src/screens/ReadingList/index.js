@@ -1,8 +1,8 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, SafeAreaView, View} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import UserPost from '../Profile/UserPost';
 import BookmarkList from './BookmarkList';
+import HistoryList from './HistoryList';
 
 import {colors} from '../../utils/theme';
 
@@ -17,7 +17,7 @@ const ReadingList = ({author, user}) => {
 
   const renderScene = SceneMap({
     one: BookmarkList,
-    two: () => <View />,
+    two: HistoryList,
   });
 
   const renderTabBar = (props) => (

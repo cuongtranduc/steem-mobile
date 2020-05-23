@@ -65,6 +65,7 @@ const BookmarkList = () => {
   const _onRefresh = () => {
     setIsRefresh(true);
     setTimeout(() => setIsRefresh(false), 1500);
+    _getPost();
   };
 
   const _onEndReached = useCallback(async () => {

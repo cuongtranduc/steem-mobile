@@ -66,3 +66,23 @@ export const getBookmarks = (startAfter = null) => {
         .limit(5)
         .get();
 };
+
+export const getHistories = (startAfter = null) => {
+  const {username} = store.getState().storageReducer.account;
+  return startAfter
+    ? firestore()
+        .collection('histories')
+        .doc(username)
+        .collection('posts')
+        .orderBy('added_date', 'desc')
+        .startAfter(startAfter)
+        .limit(5)
+        .get()
+    : firestore()
+        .collection('histories')
+        .doc(username)
+        .collection('posts')
+        .orderBy('added_date', 'desc')
+        .limit(5)
+        .get();
+};
