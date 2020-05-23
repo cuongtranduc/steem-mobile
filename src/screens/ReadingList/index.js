@@ -1,8 +1,10 @@
 import React, {useMemo} from 'react';
-import {Dimensions, StyleSheet, SafeAreaView} from 'react-native';
+import {Dimensions, StyleSheet, SafeAreaView, View} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import {colors} from '../../utils/theme';
 import UserPost from '../Profile/UserPost';
+import BookmarkList from './BookmarkList';
+
+import {colors} from '../../utils/theme';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -13,14 +15,10 @@ const ReadingList = ({author, user}) => {
     {key: 'two', title: 'History'},
   ]);
 
-  const renderScene = useMemo(
-    () =>
-      SceneMap({
-        one: () => <UserPost author={author} />,
-        two: () => <UserPost author={author} />,
-      }),
-    [author],
-  );
+  const renderScene = SceneMap({
+    one: BookmarkList,
+    two: () => <View />,
+  });
 
   const renderTabBar = (props) => (
     <TabBar
@@ -32,8 +30,9 @@ const ReadingList = ({author, user}) => {
   );
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.exexlight_gray}}>
       <TabView
+        style={styles.scene}
         navigationState={{index, routes}}
         renderTabBar={renderTabBar}
         renderScene={renderScene}

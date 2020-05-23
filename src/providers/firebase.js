@@ -8,7 +8,10 @@ export const addPostToHistories = (post) => {
     .doc(username)
     .collection('posts')
     .doc(post.id.toString())
-    .set(post);
+    .set({
+      ...post,
+      added_date: new Date(),
+    });
 };
 
 export const getPostFromBookmarks = (post) => {
@@ -28,7 +31,10 @@ export const bookmark = (post) => {
     .doc(username)
     .collection('posts')
     .doc(post.id.toString())
-    .set(post);
+    .set({
+      ...post,
+      added_date: new Date(),
+    });
 };
 
 export const unBookmark = (post) => {
@@ -39,4 +45,24 @@ export const unBookmark = (post) => {
     .collection('posts')
     .doc(post.id.toString())
     .delete();
+};
+
+export const getBookmarks = (startAfter = null) => {
+  const {username} = store.getState().storageReducer.account;
+  return startAfter
+    ? firestore()
+        .collection('bookmarks')
+        .doc(username)
+        .collection('posts')
+        .orderBy('added_date', 'desc')
+        .startAfter(startAfter)
+        .limit(5)
+        .get()
+    : firestore()
+        .collection('bookmarks')
+        .doc(username)
+        .collection('posts')
+        .orderBy('added_date', 'desc')
+        .limit(5)
+        .get();
 };
