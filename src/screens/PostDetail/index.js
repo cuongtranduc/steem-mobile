@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
 import {StyleSheet, SafeAreaView, Animated, View} from 'react-native';
 import PostDetailPlaceHolder from './PostDetailPlaceHolder';
 import PostHeader from './PostHeader';
@@ -11,6 +10,7 @@ import PostMenu from './PostMenu';
 import AnimatedAlert from '../../components/AnimatedAlert';
 
 import client from '../../providers/dsteem';
+import {addPostToHistories} from '../../providers/firebase';
 
 const PostDetail = ({route, navigation}) => {
   const {username} = useSelector((state) => state.storageReducer.account);
@@ -26,23 +26,13 @@ const PostDetail = ({route, navigation}) => {
     getPost();
   }, [checkVoted, getComments, getPost]);
 
-  const addPostToFirebase = useCallback(
-    (_post) => {
-      firestore()
-        .collection('histories')
-        .doc(username)
-        .collection('posts')
-        .doc(_post.id.toString())
-        .set(_post)
-        .then(() => {
-          console.log('Post added!');
-        })
-        .catch((error) => {
-          console.log('error', error);
-        });
-    },
-    [username],
-  );
+  const addPostToFirebase = useCallback(async (_post) => {
+    try {
+      await addPostToHistories(_post);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
 
   const getComments = useCallback(() => {
     const {data} = route.params;

@@ -11,12 +11,17 @@ import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import isEmpty from 'lodash/isEmpty';
+
 import {submitVote} from '../../providers/dsteem';
+import {
+  getPostFromBookmarks,
+  bookmark,
+  unBookmark,
+} from '../../providers/firebase';
 
 import {colors} from '../../utils/theme';
 
 const PostMenu = ({post, isVoted, getActiveVotes, checkVoted, showAlert}) => {
-  const {username} = useSelector((state) => state.storageReducer.account);
   const [loading, setLoading] = useState(false);
   const [bmLoading, setBmLoading] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -26,25 +31,24 @@ const PostMenu = ({post, isVoted, getActiveVotes, checkVoted, showAlert}) => {
   }, [checkBookmark, post]);
 
   const checkBookmark = useCallback(async () => {
-    const _post = await firestore()
-      .collection('bookmarks')
-      .doc(username)
-      .collection('posts')
-      .doc(post.id.toString())
-      .get();
-    setIsBookmarked(_post.exists);
-    return _post.exists;
-  }, [post, username]);
+    try {
+      const _post = await getPostFromBookmarks(post);
+      setIsBookmarked(_post.exists);
+      return _post.exists;
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [post]);
 
   const handleBookmark = async () => {
     try {
       setBmLoading(true);
       if (isBookmarked) {
-        await unBookmark();
+        await unBookmark(post);
         setIsBookmarked(false);
         showAlert('Unbookmarked successfully');
       } else {
-        await bookmark();
+        await bookmark(post);
         setIsBookmarked(true);
         showAlert('Bookmarked successfully');
       }
@@ -53,42 +57,6 @@ const PostMenu = ({post, isVoted, getActiveVotes, checkVoted, showAlert}) => {
     } finally {
       setBmLoading(false);
     }
-  };
-
-  const bookmark = () => {
-    return new Promise((res, rej) => {
-      firestore()
-        .collection('bookmarks')
-        .doc(username)
-        .collection('posts')
-        .doc(post.id.toString())
-        .set(post)
-        .then(() => {
-          res('ok');
-        })
-        .catch((error) => {
-          rej(error);
-          console.log('error', error);
-        });
-    });
-  };
-
-  const unBookmark = () => {
-    return new Promise((res, rej) => {
-      firestore()
-        .collection('bookmarks')
-        .doc(username)
-        .collection('posts')
-        .doc(post.id.toString())
-        .delete()
-        .then(() => {
-          res('ok');
-        })
-        .catch((error) => {
-          rej(error);
-          console.log('error', error);
-        });
-    });
   };
 
   const _submitVote = async () => {
