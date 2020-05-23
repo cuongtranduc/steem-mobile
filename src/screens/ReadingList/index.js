@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, StyleSheet, SafeAreaView, View} from 'react-native';
+import {Dimensions, SafeAreaView, StyleSheet} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import BookmarkList from './BookmarkList';
 import HistoryList from './HistoryList';
@@ -23,16 +23,26 @@ const ReadingList = ({author, user}) => {
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{backgroundColor: colors.black}}
-      style={{backgroundColor: '#fff'}}
-      labelStyle={{color: '#000'}}
+      indicatorStyle={{backgroundColor: 'rgba(2, 184, 117, 1)'}}
+      style={{
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        shadowOffset: {
+          height: 1,
+          width: 0,
+        },
+        elevation: 5,
+      }}
+      activeColor={colors.black}
+      inactiveColor={colors.dark_gray}
     />
   );
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.exexlight_gray}}>
       <TabView
-        style={styles.scene}
         navigationState={{index, routes}}
         renderTabBar={renderTabBar}
         renderScene={renderScene}
@@ -42,11 +52,5 @@ const ReadingList = ({author, user}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
-});
 
 export default React.memo(ReadingList);

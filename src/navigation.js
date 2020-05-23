@@ -97,7 +97,9 @@ const ReadingListStack = ({navigation}) => {
       <Stack.Screen
         options={{
           title: 'Reading List',
-          // headerStyle,
+          headerStyle: {
+            shadowOffset: {height: 0, width: 0},
+          },
           headerTintColor: '#333',
           headerTitleStyle: {
             fontWeight: 'bold',
