@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import {StyleSheet, SafeAreaView, Animated, View} from 'react-native';
@@ -8,11 +8,13 @@ import PostBody from './PostBody';
 import PostFooter from './PostFooter';
 import PostComments from './PostComments';
 import PostMenu from './PostMenu';
+import AnimatedAlert from '../../components/AnimatedAlert';
 
 import client from '../../providers/dsteem';
 
 const PostDetail = ({route, navigation}) => {
   const {username} = useSelector((state) => state.storageReducer.account);
+  const alertRef = useRef();
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,6 +69,10 @@ const PostDetail = ({route, navigation}) => {
     [route.params, username],
   );
 
+  const showAlert = (message) => {
+    alertRef.current.show(message);
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1}}>
@@ -93,7 +99,9 @@ const PostDetail = ({route, navigation}) => {
           isVoted={isVoted}
           checkVoted={checkVoted}
           getActiveVotes={route.params.getActiveVotes}
+          showAlert={showAlert}
         />
+        <AnimatedAlert ref={alertRef} />
       </View>
     </SafeAreaView>
   );

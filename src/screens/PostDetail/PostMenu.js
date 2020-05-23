@@ -15,7 +15,7 @@ import {submitVote} from '../../providers/dsteem';
 
 import {colors} from '../../utils/theme';
 
-const PostMenu = ({post, isVoted, getActiveVotes, checkVoted}) => {
+const PostMenu = ({post, isVoted, getActiveVotes, checkVoted, showAlert}) => {
   const {username} = useSelector((state) => state.storageReducer.account);
   const [loading, setLoading] = useState(false);
   const [bmLoading, setBmLoading] = useState(false);
@@ -41,9 +41,11 @@ const PostMenu = ({post, isVoted, getActiveVotes, checkVoted}) => {
       if (isBookmarked) {
         await unBookmark();
         setIsBookmarked(false);
+        showAlert('Unbookmarked successfully');
       } else {
         await bookmark();
         setIsBookmarked(true);
+        showAlert('Bookmarked successfully');
       }
     } catch (err) {
       console.log('error', err);
