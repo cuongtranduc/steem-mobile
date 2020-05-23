@@ -32,6 +32,7 @@ const PostMenu = ({post, isVoted, getActiveVotes, checkVoted, showAlert}) => {
       .collection('posts')
       .doc(post.id.toString())
       .get();
+    setIsBookmarked(_post.exists);
     return _post.exists;
   }, [post, username]);
 
@@ -102,6 +103,7 @@ const PostMenu = ({post, isVoted, getActiveVotes, checkVoted, showAlert}) => {
       console.log('error', err);
     } finally {
       setLoading(false);
+      showAlert('Voted successfully');
     }
   };
 
