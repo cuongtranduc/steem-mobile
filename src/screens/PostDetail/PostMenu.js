@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -7,13 +7,86 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import isEmpty from 'lodash/isEmpty';
 import {submitVote} from '../../providers/dsteem';
 
 import {colors} from '../../utils/theme';
 
 const PostMenu = ({post, isVoted, getActiveVotes, checkVoted}) => {
+  const {username} = useSelector((state) => state.storageReducer.account);
   const [loading, setLoading] = useState(false);
+  const [bmLoading, setBmLoading] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    !isEmpty(post) && checkBookmark();
+  }, [checkBookmark, post]);
+
+  const checkBookmark = useCallback(async () => {
+    const _post = await firestore()
+      .collection('bookmarks')
+      .doc(username)
+      .collection('posts')
+      .doc(post.id.toString())
+      .get();
+    return _post.exists;
+  }, [post, username]);
+
+  const handleBookmark = async () => {
+    try {
+      setBmLoading(true);
+      if (isBookmarked) {
+        await unBookmark();
+        setIsBookmarked(false);
+      } else {
+        await bookmark();
+        setIsBookmarked(true);
+      }
+    } catch (err) {
+      console.log('error', err);
+    } finally {
+      setBmLoading(false);
+    }
+  };
+
+  const bookmark = () => {
+    return new Promise((res, rej) => {
+      firestore()
+        .collection('bookmarks')
+        .doc(username)
+        .collection('posts')
+        .doc(post.id.toString())
+        .set(post)
+        .then(() => {
+          res('ok');
+        })
+        .catch((error) => {
+          rej(error);
+          console.log('error', error);
+        });
+    });
+  };
+
+  const unBookmark = () => {
+    return new Promise((res, rej) => {
+      firestore()
+        .collection('bookmarks')
+        .doc(username)
+        .collection('posts')
+        .doc(post.id.toString())
+        .delete()
+        .then(() => {
+          res('ok');
+        })
+        .catch((error) => {
+          rej(error);
+          console.log('error', error);
+        });
+    });
+  };
 
   const _submitVote = async () => {
     if (isVoted) return;
@@ -48,9 +121,19 @@ const PostMenu = ({post, isVoted, getActiveVotes, checkVoted}) => {
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Icon name="message-reply-text" size={21} color={colors.dark_gray} />
       </View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="share-variant" size={21} color={colors.dark_gray} />
-      </View>
+      {bmLoading ? (
+        <ActivityIndicator size="small" />
+      ) : (
+        <TouchableOpacity
+          onPress={handleBookmark}
+          style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name="bookmark"
+            size={21}
+            color={isBookmarked ? '#fac35a' : colors.dark_gray}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

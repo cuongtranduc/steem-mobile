@@ -45,7 +45,7 @@ const PostComments = ({comments}) => {
           marginHorizontal: -15,
         }}>
         <Text style={{fontSize: 18, color: colors.dark_gray}}>
-          All Comments
+          {`All Comments (${comments.length})`}
         </Text>
       </View>
       <FlatList

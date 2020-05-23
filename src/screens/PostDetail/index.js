@@ -27,9 +27,9 @@ const PostDetail = ({route, navigation}) => {
   const addPostToFirebase = useCallback(
     (_post) => {
       firestore()
-        .collection('user_reading')
-        .doc(username)
         .collection('histories')
+        .doc(username)
+        .collection('posts')
         .doc(_post.id.toString())
         .set(_post)
         .then(() => {
