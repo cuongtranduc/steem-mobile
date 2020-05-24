@@ -17,7 +17,7 @@ const PostMenu = ({item}) => {
     <View>
       <Menu>
         <MenuTrigger>
-          <Icon name="dots-vertical" size={24} />
+          <Icon name="dots-vertical" color="#333" size={20} />
         </MenuTrigger>
         <MenuOptions>
           <MenuOption onSelect={_copyLink}>

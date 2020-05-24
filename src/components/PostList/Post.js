@@ -79,13 +79,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  avatar: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    borderColor: colors.light_gray,
-    borderWidth: 1,
-  },
   author: {
     fontWeight: 'bold',
     fontSize: 16,
@@ -108,8 +101,6 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 15,
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
   },
 });
 

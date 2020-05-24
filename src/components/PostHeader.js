@@ -23,7 +23,7 @@ const PostHeader = ({item, hideOption}) => {
           <TouchableOpacity onPress={navigateToProfile}>
             <Text style={styles.author}>{item.author}</Text>
           </TouchableOpacity>
-          {item.category && (
+          {/* {item.category && (
             <>
               <Text
                 style={{fontSize: 14, color: colors.dark_gray, marginLeft: 10}}>
@@ -33,7 +33,7 @@ const PostHeader = ({item, hideOption}) => {
                 {` #${item.category}`}
               </Text>
             </>
-          )}
+          )} */}
         </View>
         <Text style={styles.fromNow}>{fromNow(item.last_update)}</Text>
       </View>
@@ -49,16 +49,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatar: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
     borderColor: colors.light_gray,
     borderWidth: 1,
   },
   author: {
-    fontWeight: 'bold',
     fontSize: 16,
-    color: '#333',
   },
   fromNow: {
     fontSize: 14,

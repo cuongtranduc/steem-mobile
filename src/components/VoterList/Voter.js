@@ -44,16 +44,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   avatar: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
     borderColor: colors.light_gray,
     borderWidth: 1,
   },
   author: {
-    fontWeight: 'bold',
     fontSize: 16,
-    color: '#333',
   },
   fromNow: {
     fontSize: 14,

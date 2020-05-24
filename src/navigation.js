@@ -52,7 +52,6 @@ const HomeStack = ({navigation}) => {
           headerStyle,
           headerTintColor: '#333',
           headerTitleStyle: {
-            fontWeight: 'bold',
             fontSize: 20,
           },
           headerLeft: () => {
@@ -102,7 +101,6 @@ const ReadingListStack = ({navigation}) => {
           },
           headerTintColor: '#333',
           headerTitleStyle: {
-            fontWeight: 'bold',
             fontSize: 20,
           },
           headerLeft: () => {
