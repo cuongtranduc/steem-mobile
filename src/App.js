@@ -25,7 +25,7 @@ const App = () => {
 
   return (
     <>
-      {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+      <StatusBar backgroundColor={'white'} barStyle="dark-content" />
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <MenuProvider>

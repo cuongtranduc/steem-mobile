@@ -1,14 +1,22 @@
-import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from 'react-native-modal';
+import React, {useLayoutEffect, useRef} from 'react';
+import {View, StyleSheet, SafeAreaView} from 'react-native';
 
 import PostList from '../../components/PostList';
-import Login from '../../screens/Login';
+import AnimatedAlert from '../../components/AnimatedAlert';
 
 import {colors} from '../../utils/theme';
 
-const Home = () => {
+const Home = ({route}) => {
+  const alertRef = useRef();
+  useLayoutEffect(() => {
+    if (route.params?.logout) {
+      alertRef.current.show('Logout successful');
+    }
+    if (route.params?.login) {
+      alertRef.current.show('Login successful');
+    }
+  }, [route.params]);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
@@ -34,6 +42,7 @@ const Home = () => {
       </View> */}
         <PostList />
       </View>
+      <AnimatedAlert ref={alertRef} />
     </SafeAreaView>
   );
 };

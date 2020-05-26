@@ -18,6 +18,7 @@ const CustomDrawerContent = ({navigation, currentRouteName}) => {
 
   const _logout = () => {
     dispatch(StorageActions.setAccount({}));
+    navigation.navigate('Home', {logout: true});
     navigation.closeDrawer();
   };
 
@@ -104,15 +105,9 @@ const CustomDrawerContent = ({navigation, currentRouteName}) => {
               <Icon name="logout" color={colors.dark_gray} size={25} />
               <Text style={[styles.item]}>Sign out</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={_logout}
-              style={styles.row}></TouchableOpacity>
-            <TouchableOpacity
-              onPress={_logout}
-              style={styles.row}></TouchableOpacity>
-            <TouchableOpacity
-              onPress={_logout}
-              style={styles.row}></TouchableOpacity>
+            <TouchableOpacity onPress={_logout} style={styles.row} />
+            <TouchableOpacity onPress={_logout} style={styles.row} />
+            <TouchableOpacity onPress={_logout} style={styles.row} />
           </View>
           <TouchableOpacity style={{alignSelf: 'center'}}>
             <Text style={[styles.item, {color: '#000'}]}>Settings</Text>

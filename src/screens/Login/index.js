@@ -36,7 +36,7 @@ const Account = ({navigation}) => {
 
   useEffect(() => {
     if (!isEmpty(account)) {
-      navigation.goBack();
+      navigation.navigate('Home', {login: true});
     }
   }, [account, navigation]);
 
