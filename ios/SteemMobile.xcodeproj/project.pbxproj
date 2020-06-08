@@ -20,7 +20,7 @@
 		5F0E2EF2823254A2889B2D36 /* libPods-SteemMobile-SteemMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9785FC3E28B956C465470B /* libPods-SteemMobile-SteemMobileTests.a */; };
 		68DAF5D64F69E6E4607CA2D2 /* libPods-SteemMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EFB4ED43DA664AAD186212 /* libPods-SteemMobile-tvOSTests.a */; };
 		A213321F1B42C6D5967B620D /* libPods-SteemMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A4C4609B9757B8943B7394 /* libPods-SteemMobile.a */; };
-		B8B5D1792477D58200514B21 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8B5D1782477D58200514B21 /* GoogleService-Info.plist */; };
+		B8E77315248E938F008B5CDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8E77314248E938F008B5CDB /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,7 @@
 		7E9785FC3E28B956C465470B /* libPods-SteemMobile-SteemMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SteemMobile-SteemMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4EFB4ED43DA664AAD186212 /* libPods-SteemMobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SteemMobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B02B129CFBC33D8FFD82C82C /* Pods-SteemMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SteemMobile.debug.xcconfig"; path = "Target Support Files/Pods-SteemMobile/Pods-SteemMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		B8B5D1782477D58200514B21 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B8E77314248E938F008B5CDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C0AFE646269844CF417BA3F6 /* Pods-SteemMobile-SteemMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SteemMobile-SteemMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-SteemMobile-SteemMobileTests/Pods-SteemMobile-SteemMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DA57C3524A2114242C52306D /* libPods-SteemMobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SteemMobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -161,7 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				B8B5D1782477D58200514B21 /* GoogleService-Info.plist */,
+				B8E77314248E938F008B5CDB /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* SteemMobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* SteemMobileTests */,
@@ -345,7 +345,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				B8B5D1792477D58200514B21 /* GoogleService-Info.plist in Resources */,
+				B8E77315248E938F008B5CDB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
