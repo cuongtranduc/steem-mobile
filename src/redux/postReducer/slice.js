@@ -3,7 +3,7 @@ import {POST_CATEGORY} from '../../utils/constants';
 
 const initialState = {
   tag: '',
-  category: POST_CATEGORY.TRENDING,
+  category: POST_CATEGORY.NEW,
   limit: 5,
   posts: [],
   isLoading: false,
@@ -22,6 +22,7 @@ const home = createSlice({
       posts: payload.result,
     }),
     failGetPosts: (state) => ({...state, isLoading: false, isError: true}),
+    setPosts: (state, {payload}) => ({...state, posts: payload}),
   },
 });
 

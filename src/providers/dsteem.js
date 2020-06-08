@@ -16,11 +16,12 @@ import {store} from '../redux';
 
 const client = new Client('https://api.steemit.com');
 
-export function getPosts({tag, limit = 5, category = 'created'}) {
+export function getPosts({tag, limit = 5, category = 'created', ...rest}) {
   return client.database.getDiscussions(category, {
     tag,
     limit,
     truncate_body: 1,
+    ...rest,
   });
 }
 
