@@ -1,21 +1,16 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import Avatar from '../Avatar';
 
 import {fromNow} from '../../utils/time';
 import {colors} from '../../utils/theme';
-import * as Navigation from '../../navigation';
 
 const Voter = ({voter}) => {
+  const navigation = useNavigation();
   const navigateToProfile = () => {
-    Navigation.navigate('Profile', {author: voter.voter});
+    navigation.navigate('Profile', {author: voter.voter});
   };
 
   return (

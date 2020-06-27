@@ -1,16 +1,17 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import Avatar from './Avatar';
 import PostMenu from './PostMenu';
 
 import {fromNow} from '../utils/time';
 import {colors} from '../utils/theme';
-import * as Navigation from '../navigation';
 
 const PostHeader = ({item, hideOption}) => {
+  const navigation = useNavigation();
   const navigateToProfile = () => {
-    Navigation.navigate('Profile', {author: item.author});
+    navigation.navigate('Profile', {author: item.author});
   };
 
   return (

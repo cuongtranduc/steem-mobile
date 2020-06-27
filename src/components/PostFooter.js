@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {sbdToDollar} from '../utils/money';
 import {colors} from '../utils/theme';
-import {navigate} from '../navigation';
 
 const PostFooter = ({
   item,
@@ -14,6 +15,7 @@ const PostFooter = ({
   activeVotes = [],
   isVoted,
 }) => {
+  const navigation = useNavigation();
   // const {username} = useSelector((state) => state.storageReducer.account);
   // const [isVoted, setIsVoted] = useState(false);
 
@@ -25,11 +27,11 @@ const PostFooter = ({
   // }, [activeVotes, username]);
 
   const _navigateToVoters = () => {
-    navigate('Voters', {voters: activeVotes});
+    navigation.navigate('Voters', {voters: activeVotes});
   };
 
   const _navigateToPostDetail = () => {
-    navigate('PostDetail', {
+    navigation.avigate('PostDetail', {
       data: [item.author, item.permlink],
       post: item,
       isVoted,

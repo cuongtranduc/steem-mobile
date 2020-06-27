@@ -16,7 +16,6 @@ import {isEmpty} from 'lodash';
 
 import Input from '../../components/Input';
 
-import {goBack} from '../../navigation';
 import {colors} from '../../utils/theme';
 
 import {login} from '../../redux/accountReducer/operations';
@@ -101,7 +100,9 @@ const Account = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => goBack()} style={styles.closeIcon}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.closeIcon}>
         <Icon name="close" size={30} />
       </TouchableOpacity>
       {isLoading && (

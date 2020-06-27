@@ -7,18 +7,19 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import CommentPlaceHolderList from '../../components/CommentPlaceHolderList';
 import PostHeader from '../../components/PostHeader';
 import PostFooter from '../../components/PostFooter';
 import {getUserComments} from '../../providers/dsteem';
 
-import * as Navigation from '../../navigation';
 import {colors} from '../../utils/theme';
 
 const Comment = ({comment}) => {
+  const navigation = useNavigation();
   const navigateToDetail = useCallback(() => {
-    Navigation.navigate('PostDetail', {
+    navigation.navigate('PostDetail', {
       data: [comment.parent_author, comment.parent_permlink],
       post: {
         author: comment.post_id,
@@ -26,7 +27,14 @@ const Comment = ({comment}) => {
         category: comment.category,
       },
     });
-  }, [comment]);
+  }, [
+    comment.category,
+    comment.last_update,
+    comment.parent_author,
+    comment.parent_permlink,
+    comment.post_id,
+    navigation,
+  ]);
 
   return (
     <View

@@ -10,6 +10,7 @@ export const colors = {
   white: '#FFF',
   black: '#000',
 };
+export const iconSize = Platform.OS === 'ios' ? 30 : 24;
 
 export default {
   // Primary Colors

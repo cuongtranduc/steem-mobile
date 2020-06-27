@@ -8,18 +8,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
 import PostHeder from '../PostHeader';
 import PostFooter from '../PostFooter';
 
 import {colors} from '../../utils/theme';
-import * as Navigation from '../../navigation';
 import {getActiveVotes} from '../../providers/dsteem';
 
 const screenHeight = Dimensions.get('window').height;
 
 const Post = ({item}) => {
+  const navigation = useNavigation();
   const {username} = useSelector((state) => state.storageReducer.account);
   const [activeVotes, setActiveVotes] = useState([]);
   const [isVoted, setIsVoted] = useState(false);
@@ -37,7 +38,7 @@ const Post = ({item}) => {
   const metaData = JSON.parse(item.json_metadata);
 
   const navigateToDetail = () => {
-    Navigation.navigate('PostDetail', {
+    navigation.navigate('PostDetail', {
       data: [item.author, item.permlink],
       post: item,
       activeVotes,

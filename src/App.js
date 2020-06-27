@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {Text, Platform, StatusBar} from 'react-native';
+import {Text, StatusBar} from 'react-native';
 import {MenuProvider} from 'react-native-popup-menu';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import SplashScreen from 'react-native-splash-screen';
-import RootNavigator from './navigation';
+import RootNavigator from './navigations';
 import {store, persistor} from './redux';
 import theme from './utils/theme';
 
