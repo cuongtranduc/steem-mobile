@@ -27,11 +27,12 @@ const PostFooter = ({
   // }, [activeVotes, username]);
 
   const _navigateToVoters = () => {
-    navigation.navigate('Voters', {voters: activeVotes});
+    activeVotes.length > 0 &&
+      navigation.navigate('Voters', {voters: activeVotes});
   };
 
   const _navigateToPostDetail = () => {
-    navigation.avigate('PostDetail', {
+    navigation.navigate('PostDetail', {
       data: [item.author, item.permlink],
       post: item,
       isVoted,
