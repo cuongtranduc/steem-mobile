@@ -30,7 +30,7 @@
     "path-browserify": "0.0.0",
     "process": "^0.11.10",
     "react": "16.11.0",
-    "react-native": "0.62.2",
+    "react-native": "0.62.3",
     "react-native-autoheight-webview": "^1.5.1",
     "react-native-crypto-js": "^1.0.0",
     "react-native-extended-stylesheet": "^0.12.0",
